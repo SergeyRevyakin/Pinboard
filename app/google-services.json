@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "272763966921",
+    "firebase_url": "https://pinboard-fd03d.firebaseio.com",
+    "project_id": "pinboard-fd03d",
+    "storage_bucket": "pinboard-fd03d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:272763966921:android:645dc826f0557264d10418",
+        "android_client_info": {
+          "package_name": "com.pinboard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "272763966921-s0l9mv6nkhl7u5r2gjec3929kmptbh0l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pinboard",
+            "certificate_hash": "e1cd396918c4fa62985ae278097ea2657a4a6a1b"
+          }
+        },
+        {
+          "client_id": "272763966921-5nopekh5ecd959f2irnheanoc0uh51hv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_mpQLFrUh9rSxu8jdxoIk_PbJay7xg_8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "272763966921-5nopekh5ecd959f2irnheanoc0uh51hv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
