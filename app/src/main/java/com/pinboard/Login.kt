@@ -13,7 +13,6 @@ import kotlinx.android.synthetic.main.login.*
 
 class Login : AppCompatActivity(), View.OnClickListener {
     private val TAG = "FirebaseEmailPassword"
-
     private var mAuth: FirebaseAuth? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
