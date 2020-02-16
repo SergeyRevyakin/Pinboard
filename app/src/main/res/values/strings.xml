@@ -1,5 +1,16 @@
 <resources>
     <string name="app_name">Pinboard</string>
     <string name="action_settings">Settings</string>
+
+    <!--login screen start-->
     <string name="login_header">Login</string>
+    <string name="signed_out">Signed Out</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="create_account">Create Account</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="verify_email">Verify Email</string>
+
+    <!--login screen start-->
 </resources>
