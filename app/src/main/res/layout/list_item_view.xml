@@ -7,21 +7,21 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/message_header"
+        android:id="@+id/pin_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="28sp"
         tools:text="Header" />
 
     <TextView
-        android:id="@+id/message_content"
+        android:id="@+id/pin_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:text="Here goes some content" />
 
     <TextView
-        android:id="@+id/message_owner"
+        android:id="@+id/pin_owner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"

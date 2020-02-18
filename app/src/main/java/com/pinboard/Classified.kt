@@ -26,7 +26,7 @@ class Classified(private val values: List<String>) : RecyclerView.Adapter<Classi
         var textView: TextView? = null
 
         init {
-            textView = itemView?.findViewById(R.id.message_header)
+            textView = itemView?.findViewById(R.id.pin_header)
         }
 
     }
