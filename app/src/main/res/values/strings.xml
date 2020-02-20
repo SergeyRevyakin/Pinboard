@@ -7,11 +7,14 @@
     <string name="signed_out">Signed Out</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="sign_in">Sign In</string>
+    <string name="sign_in">Already have account? \n Sign In</string>
     <string name="create_account">Create Account</string>
     <string name="sign_out">Sign Out</string>
     <string name="verify_email">Verify Email</string>
     <string name="verif_email_send_to">Verification email sent to</string>
+    <string name="back_to_registration">Don\'t have account? \n Let\'s go to registration!</string>
+    <string name="username">Username</string>
+    <string name="welcome_to">Welcome to</string>
 
     <!--login_activity screen start-->
 </resources>

@@ -1,5 +1,6 @@
 package com.pinboard
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -54,7 +55,10 @@ class MessageActivity : AppCompatActivity() {
         }
 
         btnBack.setOnClickListener {
-            finish()
+            FirebaseAuth.getInstance().signOut()
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
         }
 
         val recyclerView: RecyclerView = findViewById(R.id.recyclerview)
