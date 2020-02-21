@@ -46,19 +46,20 @@
 
     <Button
         android:id="@+id/login_button"
-        style="@android:style/Widget.DeviceDefault.Light.Button"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/rounded_button"
+        android:text="@string/login_header"
         android:textColor="@color/justWhite"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/password_edittext_login"
         app:layout_constraintStart_toStartOf="@+id/password_edittext_login"
-        app:layout_constraintTop_toBottomOf="@+id/password_edittext_login"
-        tools:text="@string/login_header" />
+        app:layout_constraintTop_toBottomOf="@+id/password_edittext_login" />
 
     <TextView
-        android:id="@+id/welcome_textview"
+        android:id="@+id/to_registration_textview"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
