@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android = "http://schemas.android.com/apk/res/android"
+												   xmlns:app = "http://schemas.android.com/apk/res-auto"
+												   xmlns:tools = "http://schemas.android.com/tools"
+												   android:layout_width = "match_parent"
+												   android:layout_height = "match_parent"
+												   android:background = "@color/colorPrimarySoft"
+												   tools:context = ".CreatePinActivity">
+
+	<include
+		android:id = "@+id/toolbar"
+		layout = "@layout/toolbar" />
+
+	<ImageView
+		android:id = "@+id/imageView"
+		android:layout_width = "0dp"
+		android:layout_height = "150dp"
+		android:layout_marginTop = "16dp"
+		app:layout_constraintEnd_toEndOf = "parent"
+		app:layout_constraintHorizontal_bias = "0.0"
+		app:layout_constraintStart_toStartOf = "parent"
+		app:layout_constraintTop_toTopOf = "parent" />
+
+	<Button
+		android:id = "@+id/upload_image_button"
+		android:layout_width = "wrap_content"
+		android:layout_height = "wrap_content"
+		android:text = "Attach image"
+		app:layout_constraintEnd_toEndOf = "@+id/imageView"
+		app:layout_constraintStart_toStartOf = "@+id/imageView"
+		app:layout_constraintTop_toTopOf = "@+id/imageView" />
+
+	<EditText
+		android:id = "@+id/pin_header_edittext"
+		android:layout_width = "0dp"
+		android:layout_height = "50dp"
+		android:layout_marginStart = "16dp"
+		android:layout_marginTop = "16dp"
+		android:layout_marginEnd = "16dp"
+		android:background = "@drawable/rounded_edittext"
+		android:ems = "10"
+		android:hint = "Enter header here"
+		android:inputType = "textPersonName"
+		android:paddingStart = "16dp"
+		android:textSize = "18sp"
+		app:layout_constraintEnd_toEndOf = "parent"
+		app:layout_constraintStart_toStartOf = "parent"
+		app:layout_constraintTop_toBottomOf = "@+id/imageView" />
+
+	<EditText
+		android:id = "@+id/description_edittext_create"
+		android:layout_width = "0dp"
+		android:layout_height = "177dp"
+		android:layout_marginTop = "@dimen/spaces_between_textviews"
+		android:background = "@drawable/rounded_edittext"
+		android:ems = "10"
+		android:gravity = "start|top"
+		android:hint = "Type description of your pin here..."
+		android:inputType = "textMultiLine"
+		android:paddingStart = "16dp"
+		android:paddingTop = "6dp"
+		android:scrollbarAlwaysDrawVerticalTrack = "false"
+		android:scrollbarStyle = "insideOverlay"
+		android:singleLine = "false"
+		app:layout_constraintEnd_toEndOf = "@+id/pin_header_edittext"
+		app:layout_constraintHorizontal_bias = "0.46"
+		app:layout_constraintStart_toStartOf = "@+id/pin_header_edittext"
+		app:layout_constraintTop_toBottomOf = "@+id/pin_header_edittext" />
+
+	<Button
+		android:id = "@+id/button3"
+		android:layout_width = "0dp"
+		android:layout_height = "wrap_content"
+		android:layout_marginTop = "@dimen/spaces_between_textviews"
+		android:background = "@drawable/rounded_button"
+		android:text = "Button"
+		app:layout_constraintEnd_toEndOf = "@+id/description_edittext_create"
+		app:layout_constraintStart_toStartOf = "@+id/description_edittext_create"
+		app:layout_constraintTop_toBottomOf = "@+id/editText4" />
+
+	<EditText
+		android:id = "@+id/editText4"
+		android:layout_width = "0dp"
+		android:layout_height = "50dp"
+		android:layout_marginStart = "8dp"
+		android:layout_marginTop = "@dimen/spaces_between_textviews"
+		android:background = "@drawable/rounded_edittext"
+		android:ems = "10"
+		android:inputType = "numberDecimal"
+		android:paddingStart = "16dp"
+		android:textSize = "18sp"
+
+		app:layout_constraintEnd_toEndOf = "@+id/description_edittext_create"
+		app:layout_constraintStart_toEndOf = "@+id/textView3"
+		app:layout_constraintTop_toBottomOf = "@+id/description_edittext_create" />
+
+	<TextView
+		android:id = "@+id/textView3"
+		android:layout_width = "wrap_content"
+		android:layout_height = "wrap_content"
+		android:layout_marginTop = "24dp"
+		android:paddingEnd = "20dp"
+		android:text = "Price"
+		android:textColor = "@color/colorPrimaryDark"
+		android:textSize = "18sp"
+		android:textStyle = "bold"
+		app:layout_constraintEnd_toStartOf = "@+id/editText4"
+		app:layout_constraintHorizontal_bias = "0.0"
+		app:layout_constraintStart_toStartOf = "@+id/description_edittext_create"
+		app:layout_constraintTop_toBottomOf = "@+id/description_edittext_create" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
