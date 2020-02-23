@@ -5,7 +5,10 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
@@ -25,8 +28,12 @@ class CreatePinActivity : AppCompatActivity() {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_create_pin)
 
-		setSupportActionBar(findViewById(R.id.toolbar))
-
+		val tb: Toolbar = findViewById(R.id.toolbar)
+		setSupportActionBar(tb)
+		tb.setNavigationIcon(R.drawable.arrow_left)
+		tb.setNavigationOnClickListener {
+			onBackPressed()
+		}
 
 		mDatabase = FirebaseDatabase.getInstance().reference
 		mMessageReference = FirebaseDatabase.getInstance().getReference("messages")

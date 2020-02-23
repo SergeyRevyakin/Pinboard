@@ -70,7 +70,7 @@ class MessageActivity : AppCompatActivity() {
 		recyclerView.layoutManager = LinearLayoutManager(this)
 
 
-		val query = mMessageReference!!.limitToLast(8)
+		val query = mMessageReference
 
 		mAdapter = object : FirebaseRecyclerAdapter<Pin, MessageViewHolder>(
 			Pin::class.java, R.layout.list_item_view, MessageViewHolder::class.java, query
@@ -81,7 +81,7 @@ class MessageActivity : AppCompatActivity() {
 				model: Pin?,
 				position: Int
 			) {
-				viewHolder!!.bindMessage(model)
+				viewHolder?.bindMessage(model)
 			}
 
 			override fun onChildChanged(
@@ -101,8 +101,8 @@ class MessageActivity : AppCompatActivity() {
 
 	override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
 		R.id.add_new_pin -> {
-			val intent = Intent(this, CreatePinActivity::class.java)
-			intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+			val intent = Intent(this@MessageActivity, CreatePinActivity::class.java)
+			//intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
 			startActivity(intent)
 			true
 		}
@@ -123,7 +123,6 @@ class MessageActivity : AppCompatActivity() {
 	override fun onCreateOptionsMenu(menu: Menu): Boolean {
 		//Inflate the menu; this adds items to the action bar if it is present.
 		menuInflater.inflate(R.menu.menu_add_pin_search, menu)
-
 		return true
 	}
 

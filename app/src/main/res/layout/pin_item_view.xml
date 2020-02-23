@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android = "http://schemas.android.com/apk/res/android"
+												   xmlns:app = "http://schemas.android.com/apk/res-auto"
+												   android:layout_width = "match_parent"
+												   android:layout_height = "match_parent">
+
+	<ImageView
+		android:id = "@+id/pin_items_imageview"
+		android:layout_width = "match_parent"
+		android:layout_height = "200dp"
+		app:layout_constraintEnd_toEndOf = "parent"
+		app:layout_constraintStart_toStartOf = "parent"
+		app:layout_constraintTop_toTopOf = "parent"
+		app:srcCompat = "?attr/colorError" />
+
+	<TextView
+		android:id = "@+id/pin_header_textview"
+		android:layout_width = "281dp"
+		android:layout_height = "wrap_content"
+		android:text = "TextView"
+		android:textSize = "24sp"
+		app:layout_constraintStart_toStartOf = "parent"
+		app:layout_constraintTop_toBottomOf = "@+id/pin_items_imageview" />
+
+	<TextView
+		android:id = "@+id/pin_price_textview"
+		android:layout_width = "0dp"
+		android:layout_height = "wrap_content"
+		android:text = "price"
+		android:textColor = "@color/colorPrimaryDark"
+		android:textSize = "24sp"
+		app:layout_constraintEnd_toEndOf = "parent"
+		app:layout_constraintStart_toEndOf = "@+id/pin_header_textview"
+		app:layout_constraintTop_toBottomOf = "@+id/pin_items_imageview" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
