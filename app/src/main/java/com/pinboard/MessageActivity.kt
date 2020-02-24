@@ -33,15 +33,11 @@ class MessageActivity : AppCompatActivity() {
 
 	private var mAdapter: FirebaseRecyclerAdapter<Pin, MessageViewHolder>? = null
 
-	//private val toolbar: Toolbar? = null
-
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.message_activity)
 
-
 		setSupportActionBar(findViewById(R.id.toolbar))
-
 
 		mDatabase = FirebaseDatabase.getInstance().reference
 		mMessageReference = FirebaseDatabase.getInstance().getReference("messages")
@@ -65,7 +61,7 @@ class MessageActivity : AppCompatActivity() {
 //
 //        val layoutManager = LinearLayoutManager(this)
 //        layoutManager.reverseLayout = false
-		recyclerView.setHasFixedSize(true)
+		//recyclerView.setHasFixedSize(true)
 		//recyclerView.layoutManager = layoutManager
 		recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -126,18 +122,17 @@ class MessageActivity : AppCompatActivity() {
 		return true
 	}
 
-
 	private fun firebaseListenerInit() {
 
 		val childEventListener = object : ChildEventListener {
 
 			override fun onChildAdded(dataSnapshot: DataSnapshot, previousChildName: String?) {
 				val message = dataSnapshot.getValue(Pin::class.java)
-				Log.e(TAG, "onChildAdded:" + message!!.header)
+				//Log.e(TAG, "onChildAdded:" + message!!.header)
 			}
 
 			override fun onChildChanged(dataSnapshot: DataSnapshot, previousChildName: String?) {
-				Log.e(TAG, "onChildChanged:" + dataSnapshot.key)
+				//Log.e(TAG, "onChildChanged:" + dataSnapshot.key)
 
 				// A message has changed
 				val message = dataSnapshot.getValue(Pin::class.java)
@@ -149,7 +144,7 @@ class MessageActivity : AppCompatActivity() {
 			}
 
 			override fun onChildRemoved(dataSnapshot: DataSnapshot) {
-				Log.e(TAG, "onChildRemoved:" + dataSnapshot.key)
+				//Log.e(TAG, "onChildRemoved:" + dataSnapshot.key)
 
 				// A message has been removed
 				val message = dataSnapshot.getValue(Pin::class.java)

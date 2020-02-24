@@ -33,11 +33,12 @@ class Pin {
 
 	fun toMap(): Map<String, Any> {
 		val result = HashMap<String, Any>()
-		result.put("author", author!!)
-		result.put("header", header!!)
-		result.put("time", time!!)
-		result.put("description", description!!)
-		result.put("price", price!!)
+		result["author"] = author!!
+		result["header"] = header!!
+		result["time"] = time!!
+		result["description"] = description!!
+		result["price"] = price!!
+		result["imageURL"] = imageURL!!
 
 		return result
 	}

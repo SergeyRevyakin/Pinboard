@@ -6,11 +6,11 @@ import kotlinx.android.synthetic.main.list_item_view.view.*
 
 class MessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    fun bindMessage(pin: Pin?) {
-        with(pin!!) {
-            itemView.pin_owner.text = author
-            itemView.pin_content.text = description
-            itemView.pin_header.text = header
-        }
-    }
+	fun bindMessage(pin: Pin?) {
+		with(pin!!) {
+			itemView.pin_owner.text = author
+			itemView.pin_content.text = description
+			itemView.pin_header.text = header
+		}
+	}
 }

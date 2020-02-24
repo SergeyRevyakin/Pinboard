@@ -9,26 +9,26 @@ import androidx.recyclerview.widget.RecyclerView
 
 class Classified(private val values: List<String>) : RecyclerView.Adapter<Classified.MyHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MyHolder(
-        LayoutInflater.from(parent.context).inflate(R.layout.list_item_view, parent, false)
-    )
-    //return itemView
+	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MyHolder(
+		LayoutInflater.from(parent.context).inflate(R.layout.list_item_view, parent, false)
+	)
+	//return itemView
 
-    override fun getItemCount(): Int {
-        return values.size
-    }
+	override fun getItemCount(): Int {
+		return values.size
+	}
 
-    override fun onBindViewHolder(holder: MyHolder, position: Int) {
-        holder?.textView?.text = values[position]
-    }
+	override fun onBindViewHolder(holder: MyHolder, position: Int) {
+		holder?.textView?.text = values[position]
+	}
 
-    class MyHolder(itemView: View?) : RecyclerView.ViewHolder(itemView!!) {
-        var textView: TextView? = null
+	class MyHolder(itemView: View?) : RecyclerView.ViewHolder(itemView!!) {
+		var textView: TextView? = null
 
-        init {
-            textView = itemView?.findViewById(R.id.pin_header)
-        }
+		init {
+			textView = itemView?.findViewById(R.id.pin_header)
+		}
 
-    }
+	}
 
 }

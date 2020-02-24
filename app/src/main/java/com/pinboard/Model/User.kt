@@ -5,7 +5,7 @@ import com.google.firebase.database.IgnoreExtraProperties
 @IgnoreExtraProperties
 class User {
 	var userID: String? = null
-	var userName: String? = null
+	public var userName: String? = null
 	var email: String? = null
 
 	constructor() {
@@ -17,4 +17,5 @@ class User {
 		this.userName = username
 		this.email = email
 	}
+
 }

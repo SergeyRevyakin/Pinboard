@@ -5,6 +5,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
 
+//apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 28
     buildToolsVersion "29.0.3"
@@ -54,6 +56,8 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-database:2.3.0'
 
     implementation 'com.android.support:recyclerview-v7:28.1.0'
+
+    //kapt 'com.github.bumptech.glide:compiler:4.9.0'
 
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
