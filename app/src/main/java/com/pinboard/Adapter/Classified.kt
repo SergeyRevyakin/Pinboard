@@ -1,17 +1,23 @@
-package com.pinboard
+package com.pinboard.Adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.pinboard.R
 
 
 class Classified(private val values: List<String>) : RecyclerView.Adapter<Classified.MyHolder>() {
 
-	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MyHolder(
-		LayoutInflater.from(parent.context).inflate(R.layout.list_item_view, parent, false)
-	)
+	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+		MyHolder(
+			LayoutInflater.from(parent.context).inflate(
+				R.layout.list_item_view,
+				parent,
+				false
+			)
+		)
 	//return itemView
 
 	override fun getItemCount(): Int {

@@ -64,7 +64,7 @@ class CreatePinActivity : AppCompatActivity() {
 			selectedPhotoUri = data.data
 			val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
 
-			imageView.setImageBitmap(bitmap)
+			imageView_pincard.setImageBitmap(bitmap)
 		}
 
 	}

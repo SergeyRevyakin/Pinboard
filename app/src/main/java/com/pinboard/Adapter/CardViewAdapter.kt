@@ -1,7 +1,26 @@
-package com.pinboard
+package com.pinboard.Adapter
+
+//
+class CardViewAdapter {}// : RecyclerView.Adapter<CardViewAdapter.ViewHolder>() {
+//	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
+//		LayoutInflater.from(parent.context).inflate(R.layout.pin_cardview, parent, false)
+//}
+//
+//
+//class ViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView!!) {
+//
+//	var imageView: ImageView? = null
+//	var imageNameTextView: TextView? = null
+//
+//	init {
+//		imageView = itemView?.findViewById(R.id.imageView)
+//		imageNameTextView = imageView?.findViewById(R.id.ImageNameTextView)
+//	}
+//
+//}
+//}
 
 
-class CardViewAdapter {}//: RecyclerView.Adapter<CardViewAdapter.ViewHolder> {
 //
 //	//context:Context
 //	MainImageUploadInfoList:List<ImageUploadInfo>
