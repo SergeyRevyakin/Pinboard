@@ -1,33 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android = "http://schemas.android.com/apk/res/android"
+								   xmlns:app = "http://schemas.android.com/apk/res-auto"
+								   android:id = "@+id/pin_cardview"
 								   android:layout_width = "match_parent"
 								   android:layout_height = "wrap_content"
-								   android:id = "@+id/pin_cardview">
+								   android:layout_margin = "5dp"
+								   android:padding = "6dp"
+								   app:cardElevation = "3dp"
+								   app:cardMaxElevation = "8dp"
+								   app:cardPreventCornerOverlap = "true"
+								   app:cardUseCompatPadding = "false"
+								   app:contentPadding = "4dp">
 
-	<RelativeLayout
-		android:layout_width = "fill_parent"
-		android:layout_height = "250dp"
-		android:background = "#ECEFF1">
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:layout_width = "match_parent"
+		android:layout_height = "match_parent">
 
 		<ImageView
 			android:id = "@+id/imageView_pincard"
 			android:layout_width = "fill_parent"
 			android:layout_height = "200dp"
+			android:layout_marginTop = "4dp"
+			android:cropToPadding = "true"
 			android:src = "@mipmap/ic_launcher"
-			android:layout_marginTop = "10dp"
-			android:layout_marginBottom = "10dp" />
+			app:layout_constraintEnd_toEndOf = "parent"
+			app:layout_constraintStart_toStartOf = "parent"
+			app:layout_constraintTop_toTopOf = "parent" />
 
 		<TextView
+			android:id = "@+id/ImageNameTextView_pincard"
+			android:layout_width = "0dp"
+			android:layout_height = "wrap_content"
+			android:gravity = "center"
+			android:lineSpacingExtra = "4sp"
+			android:singleLine = "false"
+			android:text = "Long lonfg df sfdsohf sohoi sh ohsdh fioshof n sohdfosid "
+			android:textAlignment = "textStart"
+			android:textColor = "#000"
+			android:textSize = "22sp"
+			app:layout_constraintEnd_toStartOf = "@+id/pin_card_price_textview"
+			app:layout_constraintHorizontal_bias = "0.0"
+			app:layout_constraintStart_toStartOf = "@+id/imageView_pincard"
+			app:layout_constraintTop_toBottomOf = "@+id/imageView_pincard" />
+
+		<TextView
+			android:id = "@+id/pin_card_price_textview"
 			android:layout_width = "wrap_content"
 			android:layout_height = "wrap_content"
-			android:textSize = "20dp"
-			android:textColor = "#000"
-			android:text = "JSon Image Name"
-			android:gravity = "center"
-			android:id = "@+id/ImageNameTextView_pincard"
-			android:layout_alignParentBottom = "true"
-			android:layout_centerHorizontal = "true" />
-
-	</RelativeLayout>
+			android:width = "90dp"
+			android:text = "TextView"
+			android:textAlignment = "textEnd"
+			android:textColor = "@color/colorPrimaryDark"
+			android:textSize = "22sp"
+			android:textStyle = "bold"
+			app:layout_constraintBottom_toBottomOf = "parent"
+			app:layout_constraintEnd_toEndOf = "@+id/imageView_pincard"
+			app:layout_constraintTop_toBottomOf = "@+id/imageView_pincard" />
+	</androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

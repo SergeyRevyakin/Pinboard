@@ -8,10 +8,15 @@ import android.provider.MediaStore
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
+import com.pinboard.Dialog.WarningDialog
 import kotlinx.android.synthetic.main.activity_create_pin.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -38,6 +43,9 @@ class CreatePinActivity : AppCompatActivity() {
 			onBackPressed()
 		}
 
+//		val targetImageView = viewHolder.itemView.imageview_latest_message
+//		Picasso.get().load("gs://pinboard-fd03d.appspot.com/images/cbd1f28d-b60b-4dde-8a13-c032339d3d68").into(R.id.imageView_pincard)
+
 		mDatabase = FirebaseDatabase.getInstance().reference
 		mMessageReference = FirebaseDatabase.getInstance().getReference("messages")
 		user = FirebaseAuth.getInstance().currentUser
@@ -52,8 +60,20 @@ class CreatePinActivity : AppCompatActivity() {
 
 		button3.setOnClickListener {
 			//uploadImageToFirebaseStorage()
-			submitMessage()
-			finish()
+			if (pin_header_edittext.text.isEmpty()) {
+				pin_header_edittext.error = "REQUIRED"
+				val warningDialog: WarningDialog? = null
+				val manager: FragmentManager = getSupportFragmentManager();
+
+				val transaction: FragmentTransaction = manager.beginTransaction();
+				warningDialog?.show(transaction, "dialog")
+
+			} else if (price_edittext_create_pin.text.isEmpty()) {
+				price_edittext_create_pin.error = "REQUIRED"
+			} else {
+				submitMessage()
+				finish()
+			}
 		}
 	}
 
@@ -64,7 +84,16 @@ class CreatePinActivity : AppCompatActivity() {
 			selectedPhotoUri = data.data
 			val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
 
-			imageView_pincard.setImageBitmap(bitmap)
+			Glide.with(imageView_pincard).load(bitmap)
+				//.crossFade()
+				.thumbnail(0.5f)
+				.placeholder(R.drawable.cloud_download_outline)
+				.fallback(R.drawable.alert_circle)
+				.error(R.drawable.alert_circle)
+				.centerCrop()
+				.diskCacheStrategy(DiskCacheStrategy.ALL)
+				.into(imageView_pincard)
+			imageView_pincard.alpha = 1F
 		}
 
 	}
@@ -85,12 +114,6 @@ class CreatePinActivity : AppCompatActivity() {
 
 	private fun submitMessage() {
 
-		if (pin_header_edittext.text.isEmpty()) {
-			pin_header_edittext.error = "REQUIRED"
-			return
-		}
-
-		// User data change listener
 		mDatabase!!.child("users").child(user!!.uid)
 			.addListenerForSingleValueEvent(object : ValueEventListener {
 				override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -105,6 +128,7 @@ class CreatePinActivity : AppCompatActivity() {
 						return
 					}
 
+
 					writeNewMessage(userName)
 				}
 
@@ -115,38 +139,43 @@ class CreatePinActivity : AppCompatActivity() {
 			})
 	}
 
+
 	private fun writeNewMessage(userName: String?) {
-		var imageLinkInStorage: String? = null
+
+		var imageLinkInStorage: String?
 		if (selectedPhotoUri == null) return
 
 		val ref = FirebaseStorage.getInstance().getReference("/images/$pinNameUUID")
 		ref.putFile(selectedPhotoUri!!).addOnSuccessListener {
 			ref.downloadUrl.addOnSuccessListener {
-				imageLinkInStorage = ref.toString()!!
+				imageLinkInStorage = it?.toString()
+
+				val time =
+					SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().time)
+				val message = Pin(
+					userName,
+					pin_header_edittext.text.toString(),
+					time,
+					description_edittext_create.text.toString(),
+					price_edittext_create_pin.text.toString(),
+					imageLinkInStorage
+				)
+
+				val messageValues = message.toMap()
+				val childUpdates = HashMap<String, Any>()
+
+				//val key = mDatabase!!.child("messages").push().pinNameUUID
+
+				childUpdates.put("/messages/" + pinNameUUID, messageValues)
+				childUpdates.put("/user-messages/" + user!!.uid + "/" + pinNameUUID, messageValues)
+
+				mDatabase!!.updateChildren(childUpdates)
 			}
 		}
 			.addOnFailureListener {
 				return@addOnFailureListener
 			}
 
-		val time = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().time)
-		val message = Pin(
-			userName,//mDatabase!!.child("users").getValue(User::class.java)?.userName,
-			pin_header_edittext.text.toString(),
-			time,
-			description_edittext_create.text.toString(),
-			price_edittext_create_pin.text.toString(),
-			"gs://pinboard-fd03d.appspot.com/images/" + pinNameUUID
-		)
 
-		val messageValues = message.toMap()
-		val childUpdates = HashMap<String, Any>()
-
-		//val key = mDatabase!!.child("messages").push().pinNameUUID
-
-		childUpdates.put("/messages/" + pinNameUUID, messageValues)
-		childUpdates.put("/user-messages/" + user!!.uid + "/" + pinNameUUID, messageValues)
-
-		mDatabase!!.updateChildren(childUpdates)
 	}
 }

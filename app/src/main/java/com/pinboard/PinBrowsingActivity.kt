@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +16,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import com.pinboard.Adapter.RecyclerItemClickListener
 
 class PinBrowsingActivity : AppCompatActivity() {
 	private val TAG = "PinBrowsingActivity"
@@ -26,11 +28,11 @@ class PinBrowsingActivity : AppCompatActivity() {
 	private var mMessageReference: DatabaseReference? = null
 	private var mMessageListener: ChildEventListener? = null
 
-	private var mAdapter: FirebaseRecyclerAdapter<Pin, MessageViewHolder>? = null
+	private var mAdapter: FirebaseRecyclerAdapter<Pin, PinViewHolder>? = null
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		setContentView(R.layout.message_activity)
+		setContentView(R.layout.activity_pin_browsing)
 
 		setSupportActionBar(findViewById(R.id.toolbar))
 
@@ -84,10 +86,41 @@ class PinBrowsingActivity : AppCompatActivity() {
 				super.onChildChanged(type, snapshot, index, oldIndex)
 
 				recyclerView.scrollToPosition(index)
+
+
 			}
 		}
 
 		recyclerView.adapter = mAdapter
+
+		recyclerView.setOnItemClickListener {
+
+			val testPin: Pin = (mAdapter as FirebaseRecyclerAdapter<Pin, PinViewHolder>).getItem(it)
+
+			Toast.makeText(
+				this@PinBrowsingActivity,
+				"TEST " + testPin.header,
+				Toast.LENGTH_SHORT
+			).show()
+
+			val intent = Intent(this@PinBrowsingActivity, CreatePinActivity::class.java)
+			//intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+			startActivity(intent)
+
+		}
+	}
+
+	inline fun RecyclerView.setOnItemClickListener(crossinline listener: (position: Int) -> Unit) {
+		addOnItemTouchListener(
+			RecyclerItemClickListener(this,
+				object : RecyclerItemClickListener.OnItemClickListener {
+					override fun onItemClick(view: View, position: Int) {
+						listener(position)
+
+
+					}
+				})
+		)
 	}
 
 	override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
@@ -98,11 +131,15 @@ class PinBrowsingActivity : AppCompatActivity() {
 			true
 		}
 
-//        R.id.action_favorite -> {
-//            // User chose the "Favorite" action, mark the current item
-//            // as a favorite...
-//            true
-//        }
+		R.id.search -> {
+			//Toast.makeText(this@PinBrowsingActivity, "BUTTON WORKS!", Toast.LENGTH_LONG)
+
+			val intent = Intent(this@PinBrowsingActivity, CreatePinActivity::class.java)
+			//intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+			startActivity(intent)
+
+			true
+		}
 
 		else -> {
 			// If we got here, the user's action was not recognized.
@@ -166,6 +203,7 @@ class PinBrowsingActivity : AppCompatActivity() {
 				Log.e(TAG, "postMessages:onCancelled", databaseError.toException())
 				Toast.makeText(this@PinBrowsingActivity, "Failed to load Pin.", Toast.LENGTH_SHORT)
 					.show()
+				loginScreen()
 			}
 
 		}
@@ -174,6 +212,13 @@ class PinBrowsingActivity : AppCompatActivity() {
 
 		// copy for removing at onStop()
 		mMessageListener = childEventListener
+	}
+
+	fun loginScreen() {
+		FirebaseAuth.getInstance().signOut()
+		val intent = Intent(this, LoginActivity::class.java)
+		intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+		startActivity(intent)
 	}
 
 	override fun onStop() {

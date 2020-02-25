@@ -13,7 +13,7 @@
 		<!--			android:name = ".PinBrowsingActivity"-->
 		<!--			android:label = "@string/title_activity_pin_browsing"-->
 		<!--			android:theme = "@style/AppTheme.NoActionBar"></activity>-->
-		<!--		<activity-->
+		<activity
 		android:name = ".CreatePinActivity"
 		android:theme = "@style/AppTheme.NoActionBar" />
 		<activity android:name = ".PinBrowsingActivity">
