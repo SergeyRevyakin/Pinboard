@@ -6,6 +6,7 @@ import com.google.firebase.database.IgnoreExtraProperties
 class Pin {
 
 	var author: String? = null
+	var authorID: String? = null
 	var header: String? = null
 	var time: String? = null
 	var description: String? = null
@@ -17,6 +18,7 @@ class Pin {
 
 	constructor(
 		author: String?,
+		authorID: String?,
 		header: String?,
 		time: String?,
 		description: String?,
@@ -24,6 +26,7 @@ class Pin {
 		imageURL: String?
 	) {
 		this.author = author
+		this.authorID = author
 		this.header = header
 		this.time = time
 		this.description = description
@@ -34,6 +37,7 @@ class Pin {
 	fun toMap(): Map<String, Any> {
 		val result = HashMap<String, Any>()
 		result["author"] = author!!
+		result["authorID"] = authorID!!
 		result["header"] = header!!
 		result["time"] = time!!
 		result["description"] = description!!

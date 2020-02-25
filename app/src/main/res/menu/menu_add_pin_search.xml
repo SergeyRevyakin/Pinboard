@@ -11,4 +11,19 @@
 		android:title = "@string/search"
 		android:icon = "@drawable/magnify"
 		app:showAsAction = "ifRoom" />
+	<group android:menuCategory = "alternative">
+		<item
+			android:id = "@+id/settings_memu_button"
+			android:enabled = "true"
+			android:icon = "@drawable/settings"
+			android:iconTintMode = "src_in"
+			android:title = "Settings"
+			app:showAsAction = "never" />
+		<item
+			android:id = "@+id/logout_menu_button"
+			android:icon = "@drawable/logout_button"
+			android:title = "Logout"
+			app:showAsAction = "collapseActionView" />
+	</group>
+
 </menu>

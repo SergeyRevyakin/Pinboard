@@ -36,13 +36,6 @@ class RegistrationActivity : AppCompatActivity() {
 
 		mAuth = FirebaseAuth.getInstance()
 
-//        selectphoto_button_register.setOnClickListener {
-//            Log.d(TAG, "Try to show photo selector")
-//
-//            val intent = Intent(Intent.ACTION_PICK)
-//            intent.type = "image/*"
-//            startActivityForResult(intent, 0)
-//        }
 	}
 
 	//var selectedPhotoUri: Uri? = null
@@ -54,9 +47,6 @@ class RegistrationActivity : AppCompatActivity() {
 			// proceed and check what the selected image was....
 			Log.d(TAG, "Photo was selected")
 
-
-//      val bitmapDrawable = BitmapDrawable(bitmap)
-//      selectphoto_button_register.setBackgroundDrawable(bitmapDrawable)
 		}
 	}
 

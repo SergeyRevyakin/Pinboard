@@ -2,7 +2,6 @@ package com.pinboard
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -40,11 +39,6 @@ class LoginActivity : AppCompatActivity() {
 		FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
 			.addOnCompleteListener {
 				if (!it.isSuccessful) return@addOnCompleteListener
-
-				Log.e(
-					"Login",
-					"Successfully logged in: ${it.result?.user?.uid}"
-				)
 
 				val intent = Intent(this, PinBrowsingActivity::class.java)
 				intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)

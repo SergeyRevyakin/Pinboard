@@ -43,14 +43,10 @@ class CreatePinActivity : AppCompatActivity() {
 			onBackPressed()
 		}
 
-//		val targetImageView = viewHolder.itemView.imageview_latest_message
-//		Picasso.get().load("gs://pinboard-fd03d.appspot.com/images/cbd1f28d-b60b-4dde-8a13-c032339d3d68").into(R.id.imageView_pincard)
 
 		mDatabase = FirebaseDatabase.getInstance().reference
 		mMessageReference = FirebaseDatabase.getInstance().getReference("messages")
 		user = FirebaseAuth.getInstance().currentUser
-
-		//firebaseListenerInit()
 
 		upload_image_button.setOnClickListener {
 			val intent = Intent(Intent.ACTION_PICK)
@@ -119,6 +115,7 @@ class CreatePinActivity : AppCompatActivity() {
 				override fun onDataChange(dataSnapshot: DataSnapshot) {
 					val user = dataSnapshot.getValue(User::class.java)
 					val userName = user?.userName
+					val userID = user?.userID
 					if (user == null) {
 						Toast.makeText(
 							this@CreatePinActivity,
@@ -129,7 +126,7 @@ class CreatePinActivity : AppCompatActivity() {
 					}
 
 
-					writeNewMessage(userName)
+					writeNewMessage(userName, userID)
 				}
 
 				override fun onCancelled(error: DatabaseError) {
@@ -140,7 +137,7 @@ class CreatePinActivity : AppCompatActivity() {
 	}
 
 
-	private fun writeNewMessage(userName: String?) {
+	private fun writeNewMessage(userName: String?, userID: String?) {
 
 		var imageLinkInStorage: String?
 		if (selectedPhotoUri == null) return
@@ -154,6 +151,7 @@ class CreatePinActivity : AppCompatActivity() {
 					SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().time)
 				val message = Pin(
 					userName,
+					userID,
 					pin_header_edittext.text.toString(),
 					time,
 					description_edittext_create.text.toString(),

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android = "http://schemas.android.com/apk/res/android"
+													 xmlns:app = "http://schemas.android.com/apk/res-auto"
+													 xmlns:tools = "http://schemas.android.com/tools"
+													 android:layout_width = "match_parent"
+													 android:layout_height = "match_parent"
+													 tools:context = ".FullPinActivity">
+
+	<include
+		android:id = "@+id/toolbar"
+		layout = "@layout/toolbar" />
+
+	<TableLayout
+		android:layout_width = "match_parent"
+		android:layout_height = "match_parent"
+		android:layout_marginTop = "56dp">
+
+		<TableRow
+			android:layout_width = "match_parent"
+			android:layout_height = "109dp">
+
+			<ImageView
+				android:id = "@+id/full_pin_imageview"
+				android:layout_width = "wrap_content"
+				android:layout_height = "wrap_content"
+				app:srcCompat = "@drawable/alert_circle" />
+		</TableRow>
+
+		<TableRow
+			android:layout_width = "match_parent"
+			android:layout_height = "match_parent">
+
+			<TextView
+				android:id = "@+id/header_fullpin_textview"
+				android:layout_width = "wrap_content"
+				android:layout_height = "wrap_content"
+				android:text = "TextView" />
+		</TableRow>
+
+		<TableRow
+			android:layout_width = "match_parent"
+			android:layout_height = "match_parent">
+
+			<TextView
+				android:id = "@+id/description_fullpin_textview"
+				android:layout_width = "wrap_content"
+				android:layout_height = "wrap_content"
+				android:text = "TextView" />
+		</TableRow>
+
+		<TableRow
+			android:layout_width = "match_parent"
+			android:layout_height = "match_parent">
+
+			<TextView
+				android:id = "@+id/uid_fullpin_textview"
+				android:layout_width = "wrap_content"
+				android:layout_height = "wrap_content"
+				android:text = "TextView" />
+		</TableRow>
+	</TableLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

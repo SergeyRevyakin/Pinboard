@@ -16,7 +16,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
-import com.pinboard.Adapter.RecyclerItemClickListener
+import com.pinboard.Adapter.RecyclerItemAdapter
 
 class PinBrowsingActivity : AppCompatActivity() {
 	private val TAG = "PinBrowsingActivity"
@@ -42,11 +42,6 @@ class PinBrowsingActivity : AppCompatActivity() {
 
 		firebaseListenerInit()
 
-//		btnSend.setOnClickListener {
-//			submitMessage()
-//			edtSentText.setText("")
-//		}
-//
 //		btnBack.setOnClickListener {
 //			FirebaseAuth.getInstance().signOut()
 //			val intent = Intent(this, LoginActivity::class.java)
@@ -103,8 +98,9 @@ class PinBrowsingActivity : AppCompatActivity() {
 				Toast.LENGTH_SHORT
 			).show()
 
-			val intent = Intent(this@PinBrowsingActivity, CreatePinActivity::class.java)
+			val intent = Intent(this@PinBrowsingActivity, FullPinActivity::class.java)
 			//intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+
 			startActivity(intent)
 
 		}
@@ -112,8 +108,9 @@ class PinBrowsingActivity : AppCompatActivity() {
 
 	inline fun RecyclerView.setOnItemClickListener(crossinline listener: (position: Int) -> Unit) {
 		addOnItemTouchListener(
-			RecyclerItemClickListener(this,
-				object : RecyclerItemClickListener.OnItemClickListener {
+			RecyclerItemAdapter(
+				this,
+				object : RecyclerItemAdapter.OnItemClickListener {
 					override fun onItemClick(view: View, position: Int) {
 						listener(position)
 
@@ -127,17 +124,23 @@ class PinBrowsingActivity : AppCompatActivity() {
 		R.id.add_new_pin -> {
 			val intent = Intent(this@PinBrowsingActivity, CreatePinActivity::class.java)
 			//intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+
 			startActivity(intent)
 			true
 		}
 
 		R.id.search -> {
 			//Toast.makeText(this@PinBrowsingActivity, "BUTTON WORKS!", Toast.LENGTH_LONG)
-
 			val intent = Intent(this@PinBrowsingActivity, CreatePinActivity::class.java)
 			//intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
 			startActivity(intent)
+			true
+		}
 
+		R.id.logout_menu_button -> {
+			val intent = Intent(this@PinBrowsingActivity, LoginActivity::class.java)
+			intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+			startActivity(intent)
 			true
 		}
 
