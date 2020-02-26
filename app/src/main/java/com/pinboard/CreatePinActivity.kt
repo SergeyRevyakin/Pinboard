@@ -95,20 +95,6 @@ class CreatePinActivity : AppCompatActivity() {
 
 	}
 
-	private fun uploadImageToFirebaseStorage() {
-		if (selectedPhotoUri == null) return
-
-		//val pinNameUUID = UUID.randomUUID().toString()
-		val ref = FirebaseStorage.getInstance().getReference("/images/$pinNameUUID")
-		ref.putFile(selectedPhotoUri!!).addOnSuccessListener {
-			ref.downloadUrl.addOnSuccessListener {
-				//imageLinkInStorage=it.toString()
-			}
-		}
-
-
-	}
-
 	private fun submitMessage() {
 
 		mDatabase!!.child("users").child(user!!.uid)

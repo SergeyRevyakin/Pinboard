@@ -90,18 +90,35 @@ class PinBrowsingActivity : AppCompatActivity() {
 
 		recyclerView.setOnItemClickListener {
 
-			val testPin: Pin = (mAdapter as FirebaseRecyclerAdapter<Pin, PinViewHolder>).getItem(it)
+			val clickedPin: Pin =
+				(mAdapter as FirebaseRecyclerAdapter<Pin, PinViewHolder>).getItem(it)
 
-			Toast.makeText(
-				this@PinBrowsingActivity,
-				"TEST " + testPin.header,
-				Toast.LENGTH_SHORT
-			).show()
+//			Toast.makeText(
+//				this@PinBrowsingActivity,
+//				"TEST " + clickedPin.header,
+//				Toast.LENGTH_SHORT
+//			).show()
+			if (clickedPin.authorID.equals(FirebaseAuth.getInstance().uid)) {
+				Toast.makeText(
+					this@PinBrowsingActivity,
+					"THATS MY PIN",
+					Toast.LENGTH_SHORT
+				).show()
+				val intent = Intent(this@PinBrowsingActivity, FullMyPinActivity::class.java)
+				//intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
 
-			val intent = Intent(this@PinBrowsingActivity, FullPinActivity::class.java)
-			//intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
-
-			startActivity(intent.putExtra("pin", testPin))
+				startActivity(intent.putExtra("pin", clickedPin))
+			} else {
+				Toast.makeText(
+					this@PinBrowsingActivity,
+					"WRONG",
+					Toast.LENGTH_SHORT
+				).show()
+			}
+//			val intent = Intent(this@PinBrowsingActivity, FullMyPinActivity::class.java)
+//			//intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+//
+//			startActivity(intent.putExtra("pin", clickedPin))
 
 		}
 	}
@@ -215,7 +232,6 @@ class PinBrowsingActivity : AppCompatActivity() {
 
 		mMessageReference!!.addChildEventListener(childEventListener)
 
-		// copy for removing at onStop()
 		mMessageListener = childEventListener
 	}
 

@@ -8,17 +8,17 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.android.synthetic.main.activity_full_my_pin.*
 
-class FullPinActivity() : AppCompatActivity() {
+class FullMyPinActivity() : AppCompatActivity() {
 
 	private var user: FirebaseUser? = null
 	private var mDatabase: DatabaseReference? = null
 	private var mMessageReference: DatabaseReference? = null
-	//var pin:Pin=ipin
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		setContentView(R.layout.activity_full_pin)
+		setContentView(R.layout.activity_full_my_pin)
 
 		val tb: Toolbar = findViewById(R.id.toolbar)
 		setSupportActionBar(tb)
@@ -33,13 +33,15 @@ class FullPinActivity() : AppCompatActivity() {
 
 		val pin: Pin = intent.getSerializableExtra("pin") as Pin
 
-		Glide.with(this@FullPinActivity)
+		Glide.with(this@FullMyPinActivity)
 			.load(pin.imageURL)
 			.placeholder(R.drawable.cloud_download_outline)
 			.fallback(R.drawable.alert_circle)
 			.error(R.drawable.alert_circle)
 			.centerCrop()
 			.into(findViewById(R.id.full_pin_imageview))
+		header_fullpin_textview.text = pin.header
+		description_fullpin_textview.text = pin.description
 
 
 	}
