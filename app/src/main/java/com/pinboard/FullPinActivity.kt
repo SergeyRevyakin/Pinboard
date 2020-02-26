@@ -3,6 +3,7 @@ package com.pinboard
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
@@ -30,15 +31,15 @@ class FullPinActivity() : AppCompatActivity() {
 		mMessageReference = FirebaseDatabase.getInstance().getReference("messages")
 		user = FirebaseAuth.getInstance().currentUser
 
+		val pin: Pin = intent.getSerializableExtra("pin") as Pin
 
-//
-//		Glide.with(this@FullPinActivity)
-//			.load(pin.imageURL)
-//			.placeholder(R.drawable.cloud_download_outline)
-//			.fallback(R.drawable.alert_circle)
-//			.error(R.drawable.alert_circle)
-//			.centerCrop()
-//			.into(findViewById(R.id.full_pin_imageview))
+		Glide.with(this@FullPinActivity)
+			.load(pin.imageURL)
+			.placeholder(R.drawable.cloud_download_outline)
+			.fallback(R.drawable.alert_circle)
+			.error(R.drawable.alert_circle)
+			.centerCrop()
+			.into(findViewById(R.id.full_pin_imageview))
 
 
 	}

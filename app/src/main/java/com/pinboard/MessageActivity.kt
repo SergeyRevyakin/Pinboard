@@ -231,7 +231,7 @@ class MessageActivity : AppCompatActivity() {
 
 	private fun writeNewMessage(body: String) {
 		val time = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().time)
-		val message = Pin(getUsernameFromEmail(user!!.email), body, time, "DESC", "222", "2")
+		val message = Pin(getUsernameFromEmail(user!!.email), " ", body, time, "DESC", "222", "2")
 
 		val messageValues = message.toMap()
 		val childUpdates = HashMap<String, Any>()

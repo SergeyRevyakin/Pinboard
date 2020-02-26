@@ -101,7 +101,7 @@ class PinBrowsingActivity : AppCompatActivity() {
 			val intent = Intent(this@PinBrowsingActivity, FullPinActivity::class.java)
 			//intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
 
-			startActivity(intent)
+			startActivity(intent.putExtra("pin", testPin))
 
 		}
 	}
@@ -163,13 +163,10 @@ class PinBrowsingActivity : AppCompatActivity() {
 
 			override fun onChildAdded(dataSnapshot: DataSnapshot, previousChildName: String?) {
 				val message = dataSnapshot.getValue(Pin::class.java)
-				//Log.e(TAG, "onChildAdded:" + message!!.header)
 			}
 
 			override fun onChildChanged(dataSnapshot: DataSnapshot, previousChildName: String?) {
-				//Log.e(TAG, "onChildChanged:" + dataSnapshot.key)
 
-				// A message has changed
 				val message = dataSnapshot.getValue(Pin::class.java)
 				Toast.makeText(
 					this@PinBrowsingActivity,
@@ -204,8 +201,13 @@ class PinBrowsingActivity : AppCompatActivity() {
 
 			override fun onCancelled(databaseError: DatabaseError) {
 				Log.e(TAG, "postMessages:onCancelled", databaseError.toException())
-				Toast.makeText(this@PinBrowsingActivity, "Failed to load Pin.", Toast.LENGTH_SHORT)
+				Toast.makeText(
+					this@PinBrowsingActivity,
+					"Failed to load your Account. \n Please log in or register",
+					Toast.LENGTH_SHORT
+				)
 					.show()
+				finish()
 				loginScreen()
 			}
 
@@ -240,173 +242,3 @@ class PinBrowsingActivity : AppCompatActivity() {
 
 }
 
-
-//	private val TAG = "PinBrowsingActivity"
-//	private val REQUIRED = "Required"
-//
-//	private var user: FirebaseUser? = null
-//
-//	private var mDatabase: DatabaseReference? = null
-//	private var mMessageReference: DatabaseReference? = null
-//	private var mMessageListener: ChildEventListener? = null
-//
-//	private var mAdapter: FirebaseRecyclerAdapter<Pin, MessageViewHolder>? = null
-//
-//	companion object {
-//		var currentUser: User? = null
-//
-//		var currentPin: Pin? = null
-//
-//		val TAG = "LatestMessages"
-//	}
-//
-//	override fun onCreate(savedInstanceState: Bundle?) {
-//		super.onCreate(savedInstanceState)
-//		setContentView(R.layout.activity_pin_browsing)
-//
-////		pin_browsing_recycleviewer.adapter = adapter
-////		pin_browsing_recycleviewer.addItemDecoration(
-////			DividerItemDecoration(
-////				this,
-////				DividerItemDecoration.VERTICAL
-////			)
-////		)
-//
-//		// set item click listener on your adapter
-////		adapter.setOnItemClickListener { item, view ->
-////			Log.d(TAG, "123")
-////			val intent = Intent(this, ChatLogActivity::class.java)
-////
-////			// we are missing the chat partner user
-////
-////			val row = item as LatestMessageRow
-////			intent.putExtra(NewMessageActivity.USER_KEY, row.chatPartnerUser)
-////			startActivity(intent)
-////		}
-//
-////    setupDummyRows()
-//		listenForLatestMessages()
-//
-//		fetchCurrentUser()
-//
-//		verifyUserIsLoggedIn()
-//	}
-//
-//	val latestMessagesMap = HashMap<String, Pin>()
-//
-//	private fun refreshRecyclerViewMessages() {
-//		adapter.clear()
-//		latestMessagesMap.values.forEach {
-//			adapter.add(LatestPinRow(it))
-//		}
-//	}
-//
-//	private fun listenForLatestMessages() {
-//		val fromId = FirebaseAuth.getInstance().uid
-//		val ref = FirebaseDatabase.getInstance().getReference("/messages/$fromId")
-//		ref.addChildEventListener(object : ChildEventListener {
-//			override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-//				val chatMessage = p0.getValue(Pin::class.java) ?: return
-//				latestMessagesMap[p0.key!!] = chatMessage
-//				refreshRecyclerViewMessages()
-//			}
-//
-//			override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-//				val chatMessage = p0.getValue(Pin::class.java) ?: return
-//				latestMessagesMap[p0.key!!] = chatMessage
-//				refreshRecyclerViewMessages()
-//			}
-//
-//			override fun onChildMoved(p0: DataSnapshot, p1: String?) {
-//
-//			}
-//
-//			override fun onChildRemoved(p0: DataSnapshot) {
-//
-//			}
-//
-//			override fun onCancelled(p0: DatabaseError) {
-//
-//			}
-//		})
-//	}
-//
-//	val adapter = GroupAdapter<ViewHolder>()
-//
-////  private fun setupDummyRows() {
-////
-////
-////    adapter.add(LatestMessageRow())
-////    adapter.add(LatestMessageRow())
-////    adapter.add(LatestMessageRow())
-////  }
-//
-//	private fun fetchCurrentUser() {
-//		val uid = FirebaseAuth.getInstance().uid
-//		val ref = FirebaseDatabase.getInstance().getReference("/messages/$uid")
-//		ref.addListenerForSingleValueEvent(object : ValueEventListener {
-//
-//			override fun onDataChange(p0: DataSnapshot) {
-//				currentPin = p0.getValue(Pin::class.java)
-//				Log.d("LatestMessages", "Current user ${currentPin?.imageURL}")
-//			}
-//
-//			override fun onCancelled(p0: DatabaseError) {
-//
-//			}
-//		})
-//	}
-//
-//	private fun verifyUserIsLoggedIn() {
-//		val uid = FirebaseAuth.getInstance().uid
-//		if (uid == null) {
-//			val intent = Intent(this, RegistrationActivity::class.java)
-//			intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
-//			startActivity(intent)
-//		}
-//	}
-//
-////	override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-////		when (item?.itemId) {
-////			R.id.menu_new_message -> {
-////				val intent = Intent(this, NewMessageActivity::class.java)
-////				startActivity(intent)
-////			}
-////			R.id.menu_sign_out -> {
-////				FirebaseAuth.getInstance().signOut()
-////				val intent = Intent(this, RegisterActivity::class.java)
-////				intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
-////				startActivity(intent)
-////			}
-////		}
-////
-////		return super.onOptionsItemSelected(item)
-////	}
-//
-//	override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-//		R.id.add_new_pin -> {
-//			val intent = Intent(this@PinBrowsingActivity, CreatePinActivity::class.java)
-//			//intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
-//			startActivity(intent)
-//			true
-//		}
-//
-////        R.id.action_favorite -> {
-////            // User chose the "Favorite" action, mark the current item
-////            // as a favorite...
-////            true
-////        }
-//
-//		else -> {
-//			// If we got here, the user's action was not recognized.
-//			// Invoke the superclass to handle it.
-//			super.onOptionsItemSelected(item)
-//		}
-//	}
-//
-//	override fun onCreateOptionsMenu(menu: Menu): Boolean {
-//		//Inflate the menu; this adds items to the action bar if it is present.
-//		menuInflater.inflate(R.menu.menu_add_pin_search, menu)
-//		return true
-//	}
-//}

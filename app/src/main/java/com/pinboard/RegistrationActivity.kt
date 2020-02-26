@@ -1,6 +1,5 @@
 package com.pinboard
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -40,15 +39,15 @@ class RegistrationActivity : AppCompatActivity() {
 
 	//var selectedPhotoUri: Uri? = null
 
-	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-		super.onActivityResult(requestCode, resultCode, data)
-
-		if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null) {
-			// proceed and check what the selected image was....
-			Log.d(TAG, "Photo was selected")
-
-		}
-	}
+//	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//		super.onActivityResult(requestCode, resultCode, data)
+//
+//		if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null) {
+//			// proceed and check what the selected image was....
+//			Log.d(TAG, "Photo was selected")
+//
+//		}
+//	}
 
 	private fun performRegister() {
 		val email = email_edittext_registration.text.toString()

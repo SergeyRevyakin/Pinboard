@@ -1,9 +1,13 @@
 package com.pinboard
 
 import com.google.firebase.database.IgnoreExtraProperties
+import java.io.Serializable
 
+/**
+ *
+ */
 @IgnoreExtraProperties
-class Pin {
+class Pin : Serializable {
 
 	var author: String? = null
 	var authorID: String? = null
@@ -26,7 +30,7 @@ class Pin {
 		imageURL: String?
 	) {
 		this.author = author
-		this.authorID = author
+		this.authorID = authorID
 		this.header = header
 		this.time = time
 		this.description = description

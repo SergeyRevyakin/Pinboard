@@ -59,9 +59,9 @@ class CreatePinActivity : AppCompatActivity() {
 			if (pin_header_edittext.text.isEmpty()) {
 				pin_header_edittext.error = "REQUIRED"
 				val warningDialog: WarningDialog? = null
-				val manager: FragmentManager = getSupportFragmentManager();
+				val manager: FragmentManager = supportFragmentManager;
 
-				val transaction: FragmentTransaction = manager.beginTransaction();
+				val transaction: FragmentTransaction = manager.beginTransaction()
 				warningDialog?.show(transaction, "dialog")
 
 			} else if (price_edittext_create_pin.text.isEmpty()) {
@@ -86,7 +86,8 @@ class CreatePinActivity : AppCompatActivity() {
 				.placeholder(R.drawable.cloud_download_outline)
 				.fallback(R.drawable.alert_circle)
 				.error(R.drawable.alert_circle)
-				.centerCrop()
+				.centerInside()
+				//.centerCrop()
 				.diskCacheStrategy(DiskCacheStrategy.ALL)
 				.into(imageView_pincard)
 			imageView_pincard.alpha = 1F
