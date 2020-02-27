@@ -2,20 +2,21 @@ package com.pinboard
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_chat.*
+import androidx.appcompat.widget.Toolbar
 
 class ChatActivity : AppCompatActivity() {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_chat)
-		//setSupportActionBar(toolbar)
 
-		fab.setOnClickListener { view ->
-			Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-				.setAction("Action", null).show()
+		val tb: Toolbar = findViewById(R.id.toolbar)
+		setSupportActionBar(tb)
+		tb.setNavigationIcon(R.drawable.arrow_left)
+		tb.setNavigationOnClickListener {
+			onBackPressed()
 		}
+
 	}
 
 }

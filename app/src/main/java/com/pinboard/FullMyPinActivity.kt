@@ -1,5 +1,6 @@
 package com.pinboard
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -50,7 +51,8 @@ class FullMyPinActivity() : AppCompatActivity() {
 		description_fullpin_textview.text = pin?.description
 
 		messages_pin_button.setOnClickListener {
-			alert()
+			val intent = Intent(this, ChatActivity::class.java)
+			startActivity(intent)
 		}
 
 	}

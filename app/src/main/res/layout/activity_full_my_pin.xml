@@ -32,7 +32,7 @@
 		android:layout_width = "wrap_content"
 		android:layout_height = "wrap_content"
 		android:src = "@drawable/messages"
-		app:backgroundTint = "@color/accent"
+		app:backgroundTint = "@color/justWhite"
 		app:fabSize = "normal"
 		app:layout_anchor = "@id/bottomAppBar"
 		app:useCompatPadding = "true" />
@@ -40,7 +40,8 @@
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:layout_width = "match_parent"
 		android:layout_height = "match_parent"
-		android:layout_marginTop = "56dp">
+		android:layout_marginTop = "56dp"
+		android:padding = "8dp">
 
 		<ImageView
 			android:id = "@+id/full_pin_imageview"

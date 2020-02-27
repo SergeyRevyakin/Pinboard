@@ -1,12 +1,11 @@
 package com.pinboard
 
-import com.google.firebase.database.IgnoreExtraProperties
 import java.io.Serializable
 
 /**
  *
  */
-@IgnoreExtraProperties
+
 class Pin : Serializable {
 
 	var author: String? = null
