@@ -130,8 +130,6 @@ class PinBrowsingActivity : AppCompatActivity() {
 				object : RecyclerItemAdapter.OnItemClickListener {
 					override fun onItemClick(view: View, position: Int) {
 						listener(position)
-
-
 					}
 				})
 		)

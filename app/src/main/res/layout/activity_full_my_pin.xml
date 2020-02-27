@@ -4,68 +4,71 @@
 													 xmlns:tools = "http://schemas.android.com/tools"
 													 android:layout_width = "match_parent"
 													 android:layout_height = "match_parent"
+													 android:background = "@color/colorPrimarySoft"
 													 tools:context = ".FullMyPinActivity">
 
 	<include
 		android:id = "@+id/toolbar"
-		layout = "@layout/toolbar" />
+		layout = "@layout/toolbar"
+		android:background = "@color/colorPrimarySoft"
+		android:backgroundTint = "@color/colorPrimarySoft"
+		android:backgroundTintMode = "multiply" />
 
 	<com.google.android.material.bottomappbar.BottomAppBar
 		android:id = "@+id/bottomAppBar"
-		style = "@style/Widget.MaterialComponents.BottomAppBar.Colored"
+		style = "@style/Widget.MaterialComponents.BottomAppBar"
 		android:layout_width = "match_parent"
 		android:layout_height = "wrap_content"
-		android:layout_gravity = "bottom" />
+		android:layout_gravity = "bottom"
 
-	<TableLayout
+		android:backgroundTintMode = "src_atop"
+		app:backgroundTint = "@color/colorPrimaryDark"
+		app:fabAlignmentMode = "end"
+		app:fabAnimationMode = "scale"
+		app:navigationIcon = "@drawable/tooltip_plus_outline" />
+
+	<com.google.android.material.floatingactionbutton.FloatingActionButton
+		android:id = "@+id/delete_pin_button"
+		android:layout_width = "wrap_content"
+		android:layout_height = "wrap_content"
+		android:src = "@drawable/delete"
+		app:backgroundTint = "@color/accent"
+		app:fabSize = "auto"
+		app:layout_anchor = "@id/bottomAppBar"
+		app:useCompatPadding = "true" />
+
+	<LinearLayout
 		android:layout_width = "match_parent"
-		android:layout_height = "match_parent"
-		android:layout_marginTop = "56dp">
+		android:layout_height = "602dp"
+		android:layout_marginTop = "56dp"
+		android:background = "@color/colorPrimarySoft"
+		android:backgroundTintMode = "multiply"
+		android:orientation = "vertical"
+		android:padding = "8dp">
 
-		<TableRow
+		<ImageView
+			android:id = "@+id/full_pin_imageview"
 			android:layout_width = "match_parent"
-			android:layout_height = "250dp">
+			android:layout_height = "250dp"
+			app:srcCompat = "@drawable/alert_circle" />
 
-			<ImageView
-				android:id = "@+id/full_pin_imageview"
-				android:layout_width = "390dp"
-				android:layout_height = "250dp"
-				app:srcCompat = "@drawable/alert_circle" />
-		</TableRow>
-
-		<TableRow
+		<TextView
+			android:id = "@+id/header_fullpin_textview"
 			android:layout_width = "match_parent"
-			android:layout_height = "match_parent">
+			android:layout_height = "wrap_content"
+			android:text = "TextView" />
 
-			<TextView
-				android:id = "@+id/header_fullpin_textview"
-				android:layout_width = "wrap_content"
-				android:layout_height = "wrap_content"
-				android:text = "TextView" />
-		</TableRow>
+		<TextView
+			android:id = "@+id/description_fullpin_textview"
+			android:layout_width = "wrap_content"
+			android:layout_height = "wrap_content"
+			android:text = "TextView" />
 
-		<TableRow
-			android:layout_width = "match_parent"
-			android:layout_height = "match_parent">
-
-			<TextView
-				android:id = "@+id/description_fullpin_textview"
-				android:layout_width = "wrap_content"
-				android:layout_height = "wrap_content"
-				android:text = "TextView" />
-		</TableRow>
-
-		<TableRow
-			android:layout_width = "match_parent"
-			android:layout_height = "match_parent">
-
-			<TextView
-				android:id = "@+id/uid_fullpin_textview"
-				android:layout_width = "wrap_content"
-				android:layout_height = "wrap_content"
-				android:text = "TextView" />
-
-		</TableRow>
-	</TableLayout>
+		<TextView
+			android:id = "@+id/uid_fullpin_textview"
+			android:layout_width = "wrap_content"
+			android:layout_height = "wrap_content"
+			android:text = "TextView" />
+	</LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

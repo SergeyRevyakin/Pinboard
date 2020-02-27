@@ -139,6 +139,7 @@ class CreatePinActivity : AppCompatActivity() {
 				val message = Pin(
 					userName,
 					userID,
+					pinNameUUID,
 					pin_header_edittext.text.toString(),
 					time,
 					description_edittext_create.text.toString(),

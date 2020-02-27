@@ -38,30 +38,14 @@
 		android:layout_height = "match_parent"
 
 
+		android:background = "@color/colorPrimarySoft"
 		app:layout_behavior = "com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-		<LinearLayout
+		<androidx.recyclerview.widget.RecyclerView
+			android:id = "@+id/pin_browsing_recycleviewer"
 			android:layout_width = "match_parent"
-			android:layout_height = "match_parent"
-			android:orientation = "vertical"
-			android:weightSum = "4">
-
-			<LinearLayout
-				android:layout_width = "match_parent"
-				android:layout_height = "match_parent"
-				android:background = "@color/colorPrimarySoft"
-				android:orientation = "horizontal">
-
-			</LinearLayout>
-
-		</LinearLayout>
-
+			android:layout_height = "wrap_content" />
 	</androidx.core.widget.NestedScrollView>
-
-	<androidx.recyclerview.widget.RecyclerView
-		android:id = "@+id/pin_browsing_recycleviewer"
-		android:layout_width = "match_parent"
-		android:layout_height = "match_parent" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -11,6 +11,7 @@ class Pin : Serializable {
 
 	var author: String? = null
 	var authorID: String? = null
+	var pinID: String? = null
 	var header: String? = null
 	var time: String? = null
 	var description: String? = null
@@ -23,6 +24,7 @@ class Pin : Serializable {
 	constructor(
 		author: String?,
 		authorID: String?,
+		pinID: String?,
 		header: String?,
 		time: String?,
 		description: String?,
@@ -31,6 +33,7 @@ class Pin : Serializable {
 	) {
 		this.author = author
 		this.authorID = authorID
+		this.pinID = pinID
 		this.header = header
 		this.time = time
 		this.description = description
@@ -42,6 +45,7 @@ class Pin : Serializable {
 		val result = HashMap<String, Any>()
 		result["author"] = author!!
 		result["authorID"] = authorID!!
+		result["pinID"] = pinID!!
 		result["header"] = header!!
 		result["time"] = time!!
 		result["description"] = description!!
