@@ -1,6 +1,8 @@
 package com.pinboard
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +20,7 @@ class FullMyPinActivity() : AppCompatActivity() {
 	private var user: FirebaseUser? = null
 	private var mDatabase: DatabaseReference? = null
 	private var mMessageReference: DatabaseReference? = null
+	private var pin: Pin? = null
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -34,32 +37,32 @@ class FullMyPinActivity() : AppCompatActivity() {
 		mMessageReference = FirebaseDatabase.getInstance().getReference("messages")
 		user = FirebaseAuth.getInstance().currentUser
 
-		val pin: Pin = intent.getSerializableExtra("pin") as Pin
+		pin = intent.getSerializableExtra("pin") as Pin
 
 		Glide.with(this@FullMyPinActivity)
-			.load(pin.imageURL)
+			.load(pin?.imageURL)
 			.placeholder(R.drawable.cloud_download_outline)
 			.fallback(R.drawable.alert_circle)
 			.error(R.drawable.alert_circle)
 			.centerCrop()
 			.into(findViewById(R.id.full_pin_imageview))
-		header_fullpin_textview.text = pin.header
-		description_fullpin_textview.text = pin.description
+		header_fullpin_textview.text = pin?.header
+		description_fullpin_textview.text = pin?.description
 
-		delete_pin_button.setOnClickListener {
-			alert(pin)
+		messages_pin_button.setOnClickListener {
+			alert()
 		}
 
 	}
 
-	private fun alert(pin: Pin) {
+	private fun alert() {
 		val builder = AlertDialog.Builder(this)
 		builder.setTitle("Warning")
-		builder.setMessage("Are you sure to delete pin ${pin.header}?")
+		builder.setMessage("Are you sure to delete pin ${pin?.header}?")
 		//builder.setPositiveButton("OK", DialogInterface.OnClickListener(function = x))
 
 		builder.setPositiveButton(android.R.string.yes) { dialog, which ->
-			deletePin(pin)
+			deletePin()
 		}
 
 		builder.setNegativeButton(android.R.string.no) { dialog, which ->
@@ -69,13 +72,13 @@ class FullMyPinActivity() : AppCompatActivity() {
 		builder.show()
 	}
 
-	private fun deletePin(pin: Pin) {
-		if (user?.uid.equals(pin.authorID)) {
-			mMessageReference!!.child(pin.pinID.toString()).removeValue()
-			FirebaseStorage.getInstance().getReference("/images/${pin.pinID}").delete()
+	private fun deletePin() {
+		if (user?.uid.equals(pin?.authorID)) {
+			mMessageReference!!.child(pin?.pinID.toString()).removeValue()
+			FirebaseStorage.getInstance().getReference("/images/${pin?.pinID}").delete()
 			Toast.makeText(
 				this@FullMyPinActivity,
-				"Your pin ${pin.header} was deleted",
+				"Your pin ${pin?.header} was deleted",
 				Toast.LENGTH_SHORT
 			).show()
 			finish()
@@ -86,6 +89,28 @@ class FullMyPinActivity() : AppCompatActivity() {
 				Toast.LENGTH_SHORT
 			).show()
 			finish()
+		}
+	}
+
+	override fun onCreateOptionsMenu(menu: Menu): Boolean {
+		menuInflater.inflate(R.menu.menu_full_my_pin_bottom, menu)
+		return true
+	}
+
+	override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+		R.id.delete_my_pin_button -> {
+//			val intent = Intent(this@FullMyPinActivity, CreatePinActivity::class.java)
+//			//intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+//
+//			startActivity(intent)
+			alert()
+			true
+		}
+
+		else -> {
+			// If we got here, the user's action was not recognized.
+			// Invoke the superclass to handle it.
+			super.onOptionsItemSelected(item)
 		}
 	}
 }

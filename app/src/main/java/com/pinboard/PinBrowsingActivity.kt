@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.database.ChangeEventListener
 import com.firebase.ui.database.FirebaseRecyclerAdapter
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
@@ -114,6 +115,8 @@ class PinBrowsingActivity : AppCompatActivity() {
 					"WRONG",
 					Toast.LENGTH_SHORT
 				).show()
+				Snackbar.make(recyclerView, "Replace with your own action", Snackbar.LENGTH_LONG)
+					.setAction("Action", null).show()
 			}
 //			val intent = Intent(this@PinBrowsingActivity, FullMyPinActivity::class.java)
 //			//intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)

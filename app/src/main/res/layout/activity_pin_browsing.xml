@@ -39,6 +39,7 @@
 
 
 		android:background = "@color/colorPrimarySoft"
+		android:backgroundTint = "@color/colorPrimarySoft"
 		app:layout_behavior = "com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
 		<androidx.recyclerview.widget.RecyclerView

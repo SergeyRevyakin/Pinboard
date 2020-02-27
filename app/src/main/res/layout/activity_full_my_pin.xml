@@ -21,54 +21,59 @@
 		android:layout_height = "wrap_content"
 		android:layout_gravity = "bottom"
 
-		android:backgroundTintMode = "src_atop"
+		android:backgroundTintMode = "add"
 		app:backgroundTint = "@color/colorPrimaryDark"
 		app:fabAlignmentMode = "end"
 		app:fabAnimationMode = "scale"
-		app:navigationIcon = "@drawable/tooltip_plus_outline" />
+		app:layout_anchorGravity = "bottom" />
 
 	<com.google.android.material.floatingactionbutton.FloatingActionButton
-		android:id = "@+id/delete_pin_button"
+		android:id = "@+id/messages_pin_button"
 		android:layout_width = "wrap_content"
 		android:layout_height = "wrap_content"
-		android:src = "@drawable/delete"
+		android:src = "@drawable/messages"
 		app:backgroundTint = "@color/accent"
-		app:fabSize = "auto"
+		app:fabSize = "normal"
 		app:layout_anchor = "@id/bottomAppBar"
 		app:useCompatPadding = "true" />
 
-	<LinearLayout
+	<androidx.constraintlayout.widget.ConstraintLayout
 		android:layout_width = "match_parent"
-		android:layout_height = "602dp"
-		android:layout_marginTop = "56dp"
-		android:background = "@color/colorPrimarySoft"
-		android:backgroundTintMode = "multiply"
-		android:orientation = "vertical"
-		android:padding = "8dp">
+		android:layout_height = "match_parent"
+		android:layout_marginTop = "56dp">
 
 		<ImageView
 			android:id = "@+id/full_pin_imageview"
 			android:layout_width = "match_parent"
 			android:layout_height = "250dp"
+			app:layout_constraintEnd_toEndOf = "parent"
+			app:layout_constraintStart_toStartOf = "parent"
+			app:layout_constraintTop_toTopOf = "parent"
 			app:srcCompat = "@drawable/alert_circle" />
-
-		<TextView
-			android:id = "@+id/header_fullpin_textview"
-			android:layout_width = "match_parent"
-			android:layout_height = "wrap_content"
-			android:text = "TextView" />
 
 		<TextView
 			android:id = "@+id/description_fullpin_textview"
 			android:layout_width = "wrap_content"
 			android:layout_height = "wrap_content"
-			android:text = "TextView" />
+			android:text = "TextView"
+			app:layout_constraintStart_toStartOf = "parent"
+			app:layout_constraintTop_toBottomOf = "@+id/header_fullpin_textview" />
+
+		<TextView
+			android:id = "@+id/header_fullpin_textview"
+			android:layout_width = "match_parent"
+			android:layout_height = "wrap_content"
+			android:text = "TextView"
+			app:layout_constraintTop_toBottomOf = "@+id/full_pin_imageview"
+			tools:layout_editor_absoluteX = "8dp" />
 
 		<TextView
 			android:id = "@+id/uid_fullpin_textview"
 			android:layout_width = "wrap_content"
 			android:layout_height = "wrap_content"
-			android:text = "TextView" />
-	</LinearLayout>
+			android:text = "TextView"
+			app:layout_constraintStart_toStartOf = "parent"
+			app:layout_constraintTop_toBottomOf = "@+id/description_fullpin_textview" />
+	</androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
