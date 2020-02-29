@@ -43,21 +43,9 @@ class PinBrowsingActivity : AppCompatActivity() {
 
 		firebaseListenerInit()
 
-//		btnBack.setOnClickListener {
-//			FirebaseAuth.getInstance().signOut()
-//			val intent = Intent(this, LoginActivity::class.java)
-//			intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
-//			startActivity(intent)
-//		}
-
 		val recyclerView: RecyclerView = findViewById(R.id.pin_browsing_recycleviewer)
-//
-//        val layoutManager = LinearLayoutManager(this)
-//        layoutManager.reverseLayout = false
-		//recyclerView.setHasFixedSize(true)
-		//recyclerView.layoutManager = layoutManager
-		recyclerView.layoutManager = LinearLayoutManager(this)
 
+		recyclerView.layoutManager = LinearLayoutManager(this)
 
 		val query = mMessageReference
 
@@ -80,10 +68,7 @@ class PinBrowsingActivity : AppCompatActivity() {
 				oldIndex: Int
 			) {
 				super.onChildChanged(type, snapshot, index, oldIndex)
-
 				recyclerView.scrollToPosition(index)
-
-
 			}
 		}
 
@@ -117,11 +102,10 @@ class PinBrowsingActivity : AppCompatActivity() {
 				).show()
 				Snackbar.make(recyclerView, "Replace with your own action", Snackbar.LENGTH_LONG)
 					.setAction("Action", null).show()
+
+				val intent = Intent(this@PinBrowsingActivity, FullMyPinActivity::class.java)
+				startActivity(intent.putExtra("pin", clickedPin))
 			}
-//			val intent = Intent(this@PinBrowsingActivity, FullMyPinActivity::class.java)
-//			//intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
-//
-//			startActivity(intent.putExtra("pin", clickedPin))
 
 		}
 	}
@@ -141,16 +125,12 @@ class PinBrowsingActivity : AppCompatActivity() {
 	override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
 		R.id.add_new_pin -> {
 			val intent = Intent(this@PinBrowsingActivity, CreatePinActivity::class.java)
-			//intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
-
 			startActivity(intent)
 			true
 		}
 
 		R.id.search -> {
-			//Toast.makeText(this@PinBrowsingActivity, "BUTTON WORKS!", Toast.LENGTH_LONG)
 			val intent = Intent(this@PinBrowsingActivity, CreatePinActivity::class.java)
-			//intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
 			startActivity(intent)
 			true
 		}
@@ -163,14 +143,11 @@ class PinBrowsingActivity : AppCompatActivity() {
 		}
 
 		else -> {
-			// If we got here, the user's action was not recognized.
-			// Invoke the superclass to handle it.
 			super.onOptionsItemSelected(item)
 		}
 	}
 
 	override fun onCreateOptionsMenu(menu: Menu): Boolean {
-		//Inflate the menu; this adds items to the action bar if it is present.
 		menuInflater.inflate(R.menu.menu_add_pin_search, menu)
 		return true
 	}
@@ -236,10 +213,11 @@ class PinBrowsingActivity : AppCompatActivity() {
 		mMessageListener = childEventListener
 	}
 
-	fun loginScreen() {
+	private fun loginScreen() {
 		FirebaseAuth.getInstance().signOut()
 		val intent = Intent(this, LoginActivity::class.java)
 		intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+		finish()
 		startActivity(intent)
 	}
 

@@ -24,42 +24,51 @@
 		android:layout_height = "match_parent"
 		android:layout_marginTop = "56dp">
 
+		<EditText
+			android:id = "@+id/chat_edittext"
+			android:layout_width = "0dp"
+			android:layout_height = "wrap_content"
+			android:layout_marginStart = "8dp"
+			android:layout_marginEnd = "8dp"
+			android:ems = "10"
+			android:hint = "Type your message here"
+			android:inputType = "textMultiLine|textPersonName"
+			android:maxHeight = "150dp"
+			android:minHeight = "50dp"
+			android:textSize = "20sp"
+			app:layout_constraintBottom_toBottomOf = "parent"
+			app:layout_constraintEnd_toStartOf = "@+id/send_chat_button"
+			app:layout_constraintStart_toStartOf = "parent" />
+
 		<Button
 			android:id = "@+id/send_chat_button"
-			android:layout_width = "wrap_content"
+			android:layout_width = "50dp"
 			android:layout_height = "0dp"
 			android:layout_marginEnd = "8dp"
-			android:text = "Button"
+			app:icon = "@drawable/send"
+			app:iconPadding = "28dp"
 			app:layout_constraintBottom_toBottomOf = "@+id/chat_edittext"
 			app:layout_constraintEnd_toEndOf = "parent"
 			app:layout_constraintTop_toTopOf = "@+id/chat_edittext" />
 
 		<androidx.recyclerview.widget.RecyclerView
-			android:id = "@+id/recyclerView"
-			android:layout_width = "382dp"
-			android:layout_height = "658dp"
-			android:layout_marginStart = "8dp"
-			android:layout_marginEnd = "8dp"
-			android:layout_marginBottom = "@dimen/spaces_between_textviews"
+			android:id = "@+id/chat_recyclerview"
+			android:layout_width = "0dp"
+			android:layout_height = "0dp"
+			android:layout_marginBottom = "4dp"
+			android:background = "@color/colorPrimarySoft"
+			android:paddingLeft = "8dp"
+			android:paddingTop = "4dp"
+			android:paddingRight = "8dp"
+			android:paddingBottom = "4dp"
 			app:layout_constraintBottom_toTopOf = "@+id/chat_edittext"
 			app:layout_constraintEnd_toEndOf = "parent"
+			app:layout_constraintHorizontal_bias = "1.0"
 			app:layout_constraintStart_toStartOf = "parent"
 			app:layout_constraintTop_toTopOf = "parent">
 
 		</androidx.recyclerview.widget.RecyclerView>
 
-		<EditText
-			android:id = "@+id/chat_edittext"
-			android:layout_width = "0dp"
-			android:layout_height = "50dp"
-			android:layout_marginStart = "8dp"
-			android:layout_marginEnd = "8dp"
-			android:ems = "10"
-			android:hint = "Type chat message here..."
-			android:inputType = "textPersonName"
-			app:layout_constraintBottom_toBottomOf = "parent"
-			app:layout_constraintEnd_toStartOf = "@+id/send_chat_button"
-			app:layout_constraintStart_toStartOf = "parent" />
 	</androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -18,6 +18,8 @@ import kotlinx.android.synthetic.main.activity_full_my_pin.*
 
 class FullMyPinActivity() : AppCompatActivity() {
 
+	private val stringPIN = "pin"
+
 	private var user: FirebaseUser? = null
 	private var mDatabase: DatabaseReference? = null
 	private var mMessageReference: DatabaseReference? = null
@@ -38,7 +40,7 @@ class FullMyPinActivity() : AppCompatActivity() {
 		mMessageReference = FirebaseDatabase.getInstance().getReference("messages")
 		user = FirebaseAuth.getInstance().currentUser
 
-		pin = intent.getSerializableExtra("pin") as Pin
+		pin = intent.getSerializableExtra(stringPIN) as Pin
 
 		Glide.with(this@FullMyPinActivity)
 			.load(pin?.imageURL)
@@ -52,25 +54,21 @@ class FullMyPinActivity() : AppCompatActivity() {
 
 		messages_pin_button.setOnClickListener {
 			val intent = Intent(this, ChatActivity::class.java)
-			startActivity(intent)
+			startActivity(intent.putExtra(stringPIN, pin))
 		}
 
 	}
 
-	private fun alert() {
+	private fun deleteAlert() {
 		val builder = AlertDialog.Builder(this)
 		builder.setTitle("Warning")
 		builder.setMessage("Are you sure to delete pin ${pin?.header}?")
-		//builder.setPositiveButton("OK", DialogInterface.OnClickListener(function = x))
 
 		builder.setPositiveButton(android.R.string.yes) { dialog, which ->
 			deletePin()
 		}
 
-		builder.setNegativeButton(android.R.string.no) { dialog, which ->
-
-		}
-
+		builder.setNegativeButton(android.R.string.no) { dialog, which -> }
 		builder.show()
 	}
 
@@ -87,7 +85,7 @@ class FullMyPinActivity() : AppCompatActivity() {
 		} else {
 			Toast.makeText(
 				this@FullMyPinActivity,
-				"You cant delete this PIN",
+				"You cant delete this stringPIN",
 				Toast.LENGTH_SHORT
 			).show()
 			finish()
@@ -95,23 +93,19 @@ class FullMyPinActivity() : AppCompatActivity() {
 	}
 
 	override fun onCreateOptionsMenu(menu: Menu): Boolean {
-		menuInflater.inflate(R.menu.menu_full_my_pin_bottom, menu)
+		if (user?.uid.equals(pin?.authorID)) {
+			menuInflater.inflate(R.menu.menu_full_my_pin_bottom, menu)
+		}
 		return true
 	}
 
 	override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
 		R.id.delete_my_pin_button -> {
-//			val intent = Intent(this@FullMyPinActivity, CreatePinActivity::class.java)
-//			//intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
-//
-//			startActivity(intent)
-			alert()
+			deleteAlert()
 			true
 		}
 
 		else -> {
-			// If we got here, the user's action was not recognized.
-			// Invoke the superclass to handle it.
 			super.onOptionsItemSelected(item)
 		}
 	}

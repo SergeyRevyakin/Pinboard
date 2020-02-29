@@ -8,20 +8,18 @@ import android.provider.MediaStore
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
-import com.pinboard.Dialog.WarningDialog
 import kotlinx.android.synthetic.main.activity_create_pin.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 class CreatePinActivity : AppCompatActivity() {
+	private val REQUIRED = "REQUIRED"
 
 	private var mDatabase: DatabaseReference? = null
 	private var mMessageReference: DatabaseReference? = null
@@ -57,15 +55,10 @@ class CreatePinActivity : AppCompatActivity() {
 		button3.setOnClickListener {
 			//uploadImageToFirebaseStorage()
 			if (pin_header_edittext.text.isEmpty()) {
-				pin_header_edittext.error = "REQUIRED"
-				val warningDialog: WarningDialog? = null
-				val manager: FragmentManager = supportFragmentManager;
-
-				val transaction: FragmentTransaction = manager.beginTransaction()
-				warningDialog?.show(transaction, "dialog")
+				pin_header_edittext.error = REQUIRED
 
 			} else if (price_edittext_create_pin.text.isEmpty()) {
-				price_edittext_create_pin.error = "REQUIRED"
+				price_edittext_create_pin.error = REQUIRED
 			} else {
 				submitMessage()
 				finish()
@@ -86,8 +79,7 @@ class CreatePinActivity : AppCompatActivity() {
 				.placeholder(R.drawable.cloud_download_outline)
 				.fallback(R.drawable.alert_circle)
 				.error(R.drawable.alert_circle)
-				.centerInside()
-				//.centerCrop()
+				.centerCrop()
 				.diskCacheStrategy(DiskCacheStrategy.ALL)
 				.into(imageView_pincard)
 			imageView_pincard.alpha = 1F
@@ -152,7 +144,7 @@ class CreatePinActivity : AppCompatActivity() {
 
 				//val key = mDatabase!!.child("messages").push().pinNameUUID
 
-				childUpdates.put("/messages/" + pinNameUUID, messageValues)
+				childUpdates.put("/PINS/" + pinNameUUID, messageValues)
 				childUpdates.put("/user-messages/" + user!!.uid + "/" + pinNameUUID, messageValues)
 
 				mDatabase!!.updateChildren(childUpdates)
