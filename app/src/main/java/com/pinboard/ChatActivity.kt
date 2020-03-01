@@ -24,6 +24,7 @@ class ChatActivity : AppCompatActivity() {
 	private var mDatabase: DatabaseReference? = null
 	private var mPinReference: DatabaseReference? = null
 	private var pin: Pin? = null
+	private var userID: String? = null
 
 	val chatAdapter = GroupAdapter<ViewHolder>()
 
@@ -32,13 +33,17 @@ class ChatActivity : AppCompatActivity() {
 		setContentView(R.layout.activity_chat)
 
 		pin = intent.getSerializableExtra(stringPIN) as Pin
+		if (intent.hasExtra("userID")) {
+			userID = intent.getStringExtra("userID")
+		} else userID = FirebaseAuth.getInstance().uid
 
 		chat_recyclerview.layoutManager = LinearLayoutManager(this)
 		chat_recyclerview.adapter = chatAdapter
 
 		mDatabase = FirebaseDatabase.getInstance().reference
 		mPinReference =
-			FirebaseDatabase.getInstance().getReference("messages/${pin!!.pinID}/ChatMessages/")
+			FirebaseDatabase.getInstance()
+				.getReference("messages/${pin!!.pinID}/ChatMessages/$userID")
 		user = FirebaseAuth.getInstance().currentUser
 
 		val tb: Toolbar = findViewById(R.id.toolbar)
@@ -76,10 +81,20 @@ class ChatActivity : AppCompatActivity() {
 
 			override fun onChildAdded(p0: DataSnapshot, p1: String?) {
 				val chatMessage = p0.getValue(ChatMessage::class.java)
-				if (chatMessage?.fromID != user?.uid) {
-					chatAdapter.add(ChatFromItem(chatMessage?.text.toString()))
+				if (!pin?.authorID.equals(user?.uid)) {
+					if (chatMessage!!.fromID.equals(userID)) {
+						chatAdapter.add(ChatToItem(chatMessage?.text.toString()))
+					}
+					if (chatMessage!!.fromID.equals(pin?.authorID)) {
+						chatAdapter.add(ChatFromItem(chatMessage?.text.toString()))
+					}
 				} else {
-					chatAdapter.add(ChatToItem(chatMessage?.text.toString()))
+					if (chatMessage!!.fromID.equals(userID)) {
+						chatAdapter.add(ChatFromItem(chatMessage?.text.toString()))
+					}
+					if (chatMessage!!.fromID.equals(pin?.authorID)) {
+						chatAdapter.add(ChatToItem(chatMessage?.text.toString()))
+					}
 				}
 				scrollView()
 			}

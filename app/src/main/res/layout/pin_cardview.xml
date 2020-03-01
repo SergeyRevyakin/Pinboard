@@ -32,11 +32,11 @@
 			android:layout_width = "0dp"
 			android:layout_height = "wrap_content"
 			android:layout_marginTop = "4dp"
-			android:gravity = "center"
+			android:gravity = "fill|fill_horizontal"
 			android:lineSpacingExtra = "4sp"
 			android:singleLine = "false"
+
 			android:text = "Long lonfg df sfdsohf sohoi sh ohsdh fioshof n sohdfosid "
-			android:textAlignment = "textStart"
 			android:textColor = "#000"
 			android:textSize = "22sp"
 			app:layout_constraintEnd_toStartOf = "@+id/pin_card_price_textview"

@@ -23,6 +23,7 @@ class FullMyPinActivity() : AppCompatActivity() {
 	private var user: FirebaseUser? = null
 	private var mDatabase: DatabaseReference? = null
 	private var mMessageReference: DatabaseReference? = null
+	private var currentPinRef: DatabaseReference? = null
 	private var pin: Pin? = null
 
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,13 +37,14 @@ class FullMyPinActivity() : AppCompatActivity() {
 			onBackPressed()
 		}
 
-		mDatabase = FirebaseDatabase.getInstance().reference
-		mMessageReference = FirebaseDatabase.getInstance().getReference("messages")
-		user = FirebaseAuth.getInstance().currentUser
-
 		pin = intent.getSerializableExtra(stringPIN) as Pin
 
-		Glide.with(this@FullMyPinActivity)
+		mDatabase = FirebaseDatabase.getInstance().reference
+		mMessageReference = FirebaseDatabase.getInstance().getReference("messages")
+		currentPinRef = FirebaseDatabase.getInstance().getReference("messages/${pin?.pinID}")
+		user = FirebaseAuth.getInstance().currentUser
+
+		Glide.with(this)
 			.load(pin?.imageURL)
 			.placeholder(R.drawable.cloud_download_outline)
 			.fallback(R.drawable.alert_circle)
@@ -53,8 +55,19 @@ class FullMyPinActivity() : AppCompatActivity() {
 		description_fullpin_textview.text = pin?.description
 
 		messages_pin_button.setOnClickListener {
-			val intent = Intent(this, ChatActivity::class.java)
-			startActivity(intent.putExtra(stringPIN, pin))
+			if (user?.uid.equals(pin?.authorID)) {
+				//if (currentPinRef?.equals("ChatMessages")!!) {
+				val intent = Intent(this, PickChatActivity::class.java)
+				startActivity(intent.putExtra(stringPIN, pin))
+				//} else Toast.makeText(
+				//	this,
+				//	"You have no chat messages on this PIN",
+				//	Toast.LENGTH_SHORT
+				//).show()
+			} else {
+				val intent = Intent(this, ChatActivity::class.java)
+				startActivity(intent.putExtra(stringPIN, pin))
+			}
 		}
 
 	}
