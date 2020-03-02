@@ -56,7 +56,7 @@ class PinBrowsingActivity : AppCompatActivity() {
 
 		recyclerView?.layoutManager = LinearLayoutManager(this)
 
-		val query = mMessageReference
+//		val query = mMessageReference
 
 //		mAdapter = object : FirebaseRecyclerAdapter<Pin, PinViewHolder>(
 //			Pin::class.java, R.layout.pin_cardview, PinViewHolder::class.java, query
@@ -280,9 +280,6 @@ class PinBrowsingActivity : AppCompatActivity() {
 
 		})
 
-		//mMessageReference!!.addChildEventListener(childEventListener)
-
-		//mMessageListener = childEventListener
 	}
 
 	private fun loginScreen() {
@@ -296,15 +293,12 @@ class PinBrowsingActivity : AppCompatActivity() {
 	override fun onStop() {
 		super.onStop()
 
-		if (mMessageListener != null) {
-			mMessageReference!!.removeEventListener(mMessageListener!!)
-		}
 	}
 
 	override fun onDestroy() {
 		super.onDestroy()
 
-		mAdapter!!.cleanup()
+		sortingAdapter!!.clear()
 	}
 
 }
