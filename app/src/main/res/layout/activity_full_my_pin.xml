@@ -56,7 +56,9 @@
 			android:id = "@+id/description_fullpin_textview"
 			android:layout_width = "wrap_content"
 			android:layout_height = "wrap_content"
+			android:layout_marginTop = "8dp"
 			android:text = "TextView"
+			android:textSize = "18sp"
 			app:layout_constraintStart_toStartOf = "parent"
 			app:layout_constraintTop_toBottomOf = "@+id/header_fullpin_textview" />
 
@@ -64,16 +66,23 @@
 			android:id = "@+id/header_fullpin_textview"
 			android:layout_width = "match_parent"
 			android:layout_height = "wrap_content"
+			android:layout_marginTop = "8dp"
 			android:text = "TextView"
-			app:layout_constraintTop_toBottomOf = "@+id/full_pin_imageview"
-			tools:layout_editor_absoluteX = "8dp" />
+			android:textColor = "@color/colorPrimaryDark"
+			android:textSize = "24sp"
+			android:textStyle = "bold"
+			app:layout_constraintStart_toStartOf = "parent"
+			app:layout_constraintTop_toBottomOf = "@+id/full_pin_imageview" />
 
 		<TextView
-			android:id = "@+id/uid_fullpin_textview"
+			android:id = "@+id/price_fullpin_textview"
 			android:layout_width = "wrap_content"
 			android:layout_height = "wrap_content"
+			android:layout_marginTop = "8dp"
 			android:text = "TextView"
-			app:layout_constraintStart_toStartOf = "parent"
+			android:textSize = "24sp"
+			android:textStyle = "bold"
+			app:layout_constraintEnd_toEndOf = "parent"
 			app:layout_constraintTop_toBottomOf = "@+id/description_fullpin_textview" />
 	</androidx.constraintlayout.widget.ConstraintLayout>
 

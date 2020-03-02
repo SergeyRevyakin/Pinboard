@@ -54,7 +54,7 @@ class PickChatActivity : AppCompatActivity() {
 
 		mUserReference = FirebaseDatabase.getInstance().getReference("users")
 		currentPinRef =
-			FirebaseDatabase.getInstance().getReference("messages/${pin?.pinID}/ChatMessages")
+			FirebaseDatabase.getInstance().getReference("PINS/${pin?.pinID}/ChatMessages")
 		user = FirebaseAuth.getInstance().currentUser
 
 		userMessages()
@@ -128,12 +128,6 @@ class PickChatActivity : AppCompatActivity() {
 				pickChatAdapter.setOnItemClickListener { item, view ->
 
 					val userItem = item as userNameShow
-//					val user123=userItem.user
-//					Toast.makeText(
-//						this@PickChatActivity,
-//						user123?.userID,
-//						Toast.LENGTH_SHORT
-//					).show()
 
 					val intent = Intent(view.context, ChatActivity::class.java)
 

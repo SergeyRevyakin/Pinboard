@@ -3,15 +3,29 @@
 	  xmlns:app = "http://schemas.android.com/apk/res-auto">
 	<item
 		android:id = "@+id/add_new_pin"
-		android:title = "@string/add_new_pin"
 		android:icon = "@drawable/plus"
-		app:showAsAction = "ifRoom" />
+		android:title = "@string/add_new_pin"
+		app:showAsAction = "ifRoom|collapseActionView" />
 	<item
-		android:id = "@+id/search"
-		android:title = "@string/search"
+		android:id = "@+id/search_toolbar"
 		android:icon = "@drawable/magnify"
-		app:showAsAction = "ifRoom" />
+		android:title = "Search"
+		app:actionViewClass = "android.widget.SearchView"
+		app:showAsAction = "always" />
 	<group android:menuCategory = "alternative">
+		<item
+			android:id = "@+id/show_my_pins_menuItem"
+			android:title = "Show only my PINs" />
+		<item android:title = "Sort by">
+			<menu>
+				<item
+					android:id = "@+id/sort_by_price_menuItem"
+					android:title = "Price" />
+				<item
+					android:id = "@+id/sort_by_author_menuItem"
+					android:title = "Author" />
+			</menu>
+		</item>
 		<item
 			android:id = "@+id/settings_memu_button"
 			android:enabled = "true"

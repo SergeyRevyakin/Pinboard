@@ -12,8 +12,7 @@ class PinViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 		with(pin!!) {
 			itemView.ImageNameTextView_pincard.text = header
 			itemView.pin_card_price_textview.text = price
-//			Picasso.get().load(pin.imageURL).resize(300,200).centerCrop()
-//				.into(itemView.imageView_pincard)
+
 
 			Glide.with(itemView.imageView_pincard).load(pin.imageURL)
 				//.crossFade()

@@ -23,10 +23,10 @@ class ChatActivity : AppCompatActivity() {
 	private var user: FirebaseUser? = null
 	private var mDatabase: DatabaseReference? = null
 	private var mPinReference: DatabaseReference? = null
-	private var pin: Pin? = null
-	private var userID: String? = null
+	var pin: Pin? = null
+	var userID: String? = null
 
-	val chatAdapter = GroupAdapter<ViewHolder>()
+	protected val chatAdapter = GroupAdapter<ViewHolder>()
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -40,10 +40,11 @@ class ChatActivity : AppCompatActivity() {
 		chat_recyclerview.layoutManager = LinearLayoutManager(this)
 		chat_recyclerview.adapter = chatAdapter
 
+
 		mDatabase = FirebaseDatabase.getInstance().reference
 		mPinReference =
 			FirebaseDatabase.getInstance()
-				.getReference("messages/${pin!!.pinID}/ChatMessages/$userID")
+				.getReference("PINS/${pin!!.pinID}/ChatMessages/$userID")
 		user = FirebaseAuth.getInstance().currentUser
 
 		val tb: Toolbar = findViewById(R.id.toolbar)
@@ -117,7 +118,7 @@ class ChatActivity : AppCompatActivity() {
 				"Cant send chat message because $it",
 				Snackbar.LENGTH_LONG
 			)
-				.setAction("Action", null).show()
+				.show()
 		}
 			?.addOnSuccessListener {
 				chat_edittext.text = null

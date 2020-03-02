@@ -27,7 +27,7 @@ class CreatePinActivity : AppCompatActivity() {
 
 	var selectedPhotoUri: Uri? = null
 
-	private val pinNameUUID = UUID.randomUUID().toString()
+	//private val pinNameUUID = UUID.randomUUID().toString()
 
 
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +43,7 @@ class CreatePinActivity : AppCompatActivity() {
 
 
 		mDatabase = FirebaseDatabase.getInstance().reference
-		mMessageReference = FirebaseDatabase.getInstance().getReference("messages")
+		mMessageReference = FirebaseDatabase.getInstance().getReference("PINS/")
 		user = FirebaseAuth.getInstance().currentUser
 
 		upload_image_button.setOnClickListener {
@@ -117,11 +117,11 @@ class CreatePinActivity : AppCompatActivity() {
 
 
 	private fun writeNewMessage(userName: String?, userID: String?) {
-
+		val pushID = mMessageReference?.push()?.key
 		var imageLinkInStorage: String?
 		if (selectedPhotoUri == null) return
 
-		val ref = FirebaseStorage.getInstance().getReference("/images/$pinNameUUID")
+		val ref = FirebaseStorage.getInstance().getReference("/images/$pushID")
 		ref.putFile(selectedPhotoUri!!).addOnSuccessListener {
 			ref.downloadUrl.addOnSuccessListener {
 				imageLinkInStorage = it?.toString()
@@ -131,23 +131,30 @@ class CreatePinActivity : AppCompatActivity() {
 				val message = Pin(
 					userName,
 					userID,
-					pinNameUUID,
+					pushID,
 					pin_header_edittext.text.toString(),
 					time,
+					System.currentTimeMillis(),
 					description_edittext_create.text.toString(),
 					price_edittext_create_pin.text.toString(),
 					imageLinkInStorage
 				)
 
-				val messageValues = message.toMap()
-				val childUpdates = HashMap<String, Any>()
-
-				//val key = mDatabase!!.child("messages").push().pinNameUUID
-
-				childUpdates.put("/PINS/" + pinNameUUID, messageValues)
-				childUpdates.put("/user-messages/" + user!!.uid + "/" + pinNameUUID, messageValues)
-
-				mDatabase!!.updateChildren(childUpdates)
+				FirebaseDatabase.getInstance().getReference("PINS/$pushID").setValue(message)
+					?.addOnSuccessListener {
+						Toast.makeText(
+							this,
+							"YOUR PIN HAS BEEN CREATED",
+							Toast.LENGTH_SHORT
+						).show()
+					}
+//				val messageValues = message.toMap()
+//				val childUpdates = HashMap<String, Any>()
+//
+//				childUpdates.put("/PINS/" + pushID, messageValues)
+//				childUpdates.put("/user-messages/" + user!!.uid + "/" + pushID, messageValues)
+//
+//				mDatabase!!.updateChildren(childUpdates)
 			}
 		}
 			.addOnFailureListener {

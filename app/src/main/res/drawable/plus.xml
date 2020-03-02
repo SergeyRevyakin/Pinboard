@@ -1,10 +1,10 @@
 <!-- drawable/plus.xml -->
 <vector xmlns:android = "http://schemas.android.com/apk/res/android"
-		android:height = "@dimen/icon_size"
-		android:width = "@dimen/icon_size"
+		android:height = "29dp"
+		android:width = "29dp"
 		android:viewportWidth = "24"
 		android:viewportHeight = "24">
 	<path
-		android:fillColor = "@color/justWhite"
+		android:fillColor = "@color/common_google_signin_btn_text_light_default"
 		android:pathData = "M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
 </vector>

@@ -40,8 +40,8 @@ class FullMyPinActivity() : AppCompatActivity() {
 		pin = intent.getSerializableExtra(stringPIN) as Pin
 
 		mDatabase = FirebaseDatabase.getInstance().reference
-		mMessageReference = FirebaseDatabase.getInstance().getReference("messages")
-		currentPinRef = FirebaseDatabase.getInstance().getReference("messages/${pin?.pinID}")
+		mMessageReference = FirebaseDatabase.getInstance().getReference("PINS")
+		currentPinRef = FirebaseDatabase.getInstance().getReference("PINS/${pin?.pinID}")
 		user = FirebaseAuth.getInstance().currentUser
 
 		Glide.with(this)
@@ -53,6 +53,7 @@ class FullMyPinActivity() : AppCompatActivity() {
 			.into(findViewById(R.id.full_pin_imageview))
 		header_fullpin_textview.text = pin?.header
 		description_fullpin_textview.text = pin?.description
+		price_fullpin_textview.text = pin?.price
 
 		messages_pin_button.setOnClickListener {
 			if (user?.uid.equals(pin?.authorID)) {
