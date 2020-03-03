@@ -36,7 +36,7 @@
 			android:lineSpacingExtra = "4sp"
 			android:singleLine = "false"
 
-			android:text = "Long lonfg df sfdsohf sohoi sh ohsdh fioshof n sohdfosid "
+			android:text = "TextView"
 			android:textColor = "#000"
 			android:textSize = "22sp"
 			app:layout_constraintEnd_toStartOf = "@+id/pin_card_price_textview"
@@ -50,7 +50,7 @@
 			android:layout_height = "wrap_content"
 			android:layout_marginEnd = "4dp"
 			android:width = "90dp"
-			android:text = "TextView"
+			android:text = "Text"
 			android:textAlignment = "textEnd"
 			android:textColor = "@color/colorPrimaryDark"
 			android:textSize = "22sp"

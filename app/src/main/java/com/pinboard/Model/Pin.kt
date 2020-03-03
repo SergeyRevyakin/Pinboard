@@ -59,13 +59,10 @@ class Pin : Serializable {
 //	}
 
 	fun contain(text: String): Boolean? {
-		if (pinID?.contains(text) ?: return null) return true
-		if (authorID?.contains(text) ?: return null) return true
-		if (author?.contains(text) ?: return null) return true
-		if (header?.contains(text) ?: return null) return true
-		if (time?.contains(text) ?: return null) return true
-		if (price?.contains(text) ?: return null) return true
-		if (description?.contains(text) ?: return null) return true
+		if (author?.toLowerCase()?.contains(text) ?: return null) return true
+		if (header?.toLowerCase()?.contains(text) ?: return null) return true
+		if (price?.toLowerCase()?.contains(text) ?: return null) return true
+		if (description?.toLowerCase()?.contains(text) ?: return null) return true
 		return false
 
 	}

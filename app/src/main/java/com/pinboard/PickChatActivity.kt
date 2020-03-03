@@ -84,11 +84,18 @@ class PickChatActivity : AppCompatActivity() {
 			override fun onChildChanged(p0: DataSnapshot, p1: String?) {}
 
 			override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-				val chatMessage = p0.getValue(ChatMessage::class.java)
-				val userID = chatMessage?.fromID
-				//mUserReference.
-				if (!(addedUsersIDs!!.contains(userID))) {
-					addedUsersIDs!!.add(userID)
+				//val chatMessage =
+				var userID: String? = null
+				p0.children.forEach {
+					userID = it.getValue(ChatMessage::class.java)?.fromID
+					if (!(addedUsersIDs!!.contains(userID))) {
+						addedUsersIDs!!.add(userID)
+					}
+
+					//val userID = p1//chatMessage?.fromID
+					//mUserReference.
+//				if (!(addedUsersIDs!!.contains(userID))) {
+//					addedUsersIDs!!.add(userID)
 
 					//pickChatAdapter.add(userNameShow(userID))
 				}
@@ -99,7 +106,9 @@ class PickChatActivity : AppCompatActivity() {
 		getUsernameByID(addedUsersIDs)
 	}
 
-	class userNameShow(val user: User?) : Item<ViewHolder>() {
+	class userNameShow(
+		val user: User?
+	) : Item<ViewHolder>() {
 		override fun getLayout(): Int {
 
 			return R.layout.pick_chat_username

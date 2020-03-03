@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -17,7 +16,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.pinboard.Adapter.CardViewAdapter
-import com.pinboard.Adapter.RecyclerItemAdapter
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
 
@@ -33,7 +31,6 @@ class PinBrowsingActivity : AppCompatActivity() {
 
 	private var mDatabase: DatabaseReference? = null
 	private var mMessageReference: DatabaseReference? = null
-	private var mMessageListener: ChildEventListener? = null
 
 	private var mAdapter: FirebaseRecyclerAdapter<Pin, PinViewHolder>? = null
 
@@ -56,32 +53,6 @@ class PinBrowsingActivity : AppCompatActivity() {
 
 		recyclerView?.layoutManager = LinearLayoutManager(this)
 
-//		val query = mMessageReference
-
-//		mAdapter = object : FirebaseRecyclerAdapter<Pin, PinViewHolder>(
-//			Pin::class.java, R.layout.pin_cardview, PinViewHolder::class.java, query
-//		) {
-//
-//			override fun populateViewHolder(
-//				viewHolder: PinViewHolder?,
-//				model: Pin?,
-//				position: Int
-//			) {
-//				viewHolder?.bindMessage(model)
-//			}
-//
-//			override fun onChildChanged(
-//				type: ChangeEventListener.EventType,
-//				snapshot: DataSnapshot?,
-//				index: Int,
-//				oldIndex: Int
-//			) {
-//				super.onChildChanged(type, snapshot, index, oldIndex)
-//				recyclerView?.scrollToPosition(index)
-//			}
-//		}
-
-
 		recyclerView?.adapter = sortingAdapter
 
 		sortingAdapter.setOnItemClickListener { item, view ->
@@ -93,7 +64,6 @@ class PinBrowsingActivity : AppCompatActivity() {
 					Toast.LENGTH_SHORT
 				).show()
 				val intent = Intent(view.context, FullMyPinActivity::class.java)
-				//intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
 
 				startActivity(intent.putExtra("pin", clickedPin.pin))
 			} else {
@@ -108,46 +78,6 @@ class PinBrowsingActivity : AppCompatActivity() {
 			}
 		}
 
-
-//		recyclerView?.setOnItemClickListener {
-//
-//			val clickedPin: Pin =
-//				(mAdapter as FirebaseRecyclerAdapter<Pin, PinViewHolder>).getItem(it)
-//
-//			if (clickedPin.authorID.equals(FirebaseAuth.getInstance().uid)) {
-//				Toast.makeText(
-//					this@PinBrowsingActivity,
-//					"THATS MY PIN",
-//					Toast.LENGTH_SHORT
-//				).show()
-//				val intent = Intent(this@PinBrowsingActivity, FullMyPinActivity::class.java)
-//				//intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
-//
-//				startActivity(intent.putExtra("pin", clickedPin))
-//			} else {
-//				Toast.makeText(
-//					this@PinBrowsingActivity,
-//					"WRONG",
-//					Toast.LENGTH_SHORT
-//				).show()
-//
-//				val intent = Intent(this, FullMyPinActivity::class.java)
-//				startActivity(intent.putExtra("pin", clickedPin))
-//			}
-//
-//		}
-	}
-
-	inline fun RecyclerView.setOnItemClickListener(crossinline listener: (position: Int) -> Unit) {
-		addOnItemTouchListener(
-			RecyclerItemAdapter(
-				this,
-				object : RecyclerItemAdapter.OnItemClickListener {
-					override fun onItemClick(view: View, position: Int) {
-						listener(position)
-					}
-				})
-		)
 	}
 
 	override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
@@ -215,22 +145,24 @@ class PinBrowsingActivity : AppCompatActivity() {
 		menuInflater.inflate(R.menu.menu_add_pin_search, menu)
 		val searchItem = menu.findItem(R.id.search_toolbar)
 		val searchView = searchItem.actionView as SearchView
-		searchView.setQueryHint("Search View Hint")
+		searchView.queryHint = "Search..."
 
 		searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
 			override fun onQueryTextChange(newText: String): Boolean {
-//				for (i in 0 until pinList!!.size) {
-//					if (pinList!![i].contain(newText)) sortingAdapter.add(
-//						CardViewAdapter(pinList!![i]))
-//				}
+				sortingAdapter.clear()
+				for (i in 0 until pinList!!.size) {
+					if (pinList!![i].contain(newText.toLowerCase())!!) sortingAdapter.add(
+						CardViewAdapter(pinList!![i])
+					)
+				}
 				return false
 			}
 
 			override fun onQueryTextSubmit(query: String): Boolean {
 				sortingAdapter.clear()
 				for (i in 0 until pinList!!.size) {
-					if (pinList!![i].contain(query)!!) sortingAdapter.add(
+					if (pinList!![i].contain(query.toLowerCase())!!) sortingAdapter.add(
 						CardViewAdapter(pinList!![i])
 					)
 				}
