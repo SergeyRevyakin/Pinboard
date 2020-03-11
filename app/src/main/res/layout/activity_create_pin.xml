@@ -37,6 +37,21 @@
 				app:layout_constraintTop_toBottomOf = "@+id/toolbar"
 				app:srcCompat = "@drawable/cloud_download_outline" />
 
+			<ProgressBar
+				android:id = "@+id/progressBar"
+				style = "@android:style/Widget.Material.Light.ProgressBar.Large.Inverse"
+				android:layout_width = "0dp"
+				android:layout_height = "58dp"
+				android:layout_marginStart = "8dp"
+				android:layout_marginBottom = "3dp"
+				android:indeterminate = "true"
+				android:progressTint = "@color/colorPrimaryDark"
+				android:visibility = "invisible"
+				app:layout_constraintBottom_toTopOf = "@+id/submit_button"
+				app:layout_constraintEnd_toEndOf = "@+id/submit_button"
+				app:layout_constraintStart_toStartOf = "@+id/submit_button"
+				app:layout_constraintTop_toTopOf = "@+id/description_edittext_create" />
+
 			<Button
 				android:id = "@+id/upload_image_button"
 				android:layout_width = "0dp"
@@ -89,13 +104,14 @@
 				android:autofillHints = "" />
 
 			<Button
-				android:id = "@+id/button3"
+				android:id = "@+id/submit_button"
 				android:layout_width = "0dp"
 				android:layout_height = "wrap_content"
 				android:layout_marginTop = "@dimen/spaces_between_textviews"
 				android:background = "@drawable/rounded_button"
 				android:text = "@string/submit_pin"
 				android:textColor = "@color/justWhite"
+				android:visibility = "visible"
 				app:layout_constraintEnd_toEndOf = "@+id/description_edittext_create"
 				app:layout_constraintStart_toStartOf = "@+id/description_edittext_create"
 				app:layout_constraintTop_toBottomOf = "@+id/price_edittext_create_pin" />
@@ -132,6 +148,7 @@
 				app:layout_constraintHorizontal_bias = "0.0"
 				app:layout_constraintStart_toStartOf = "@+id/description_edittext_create"
 				app:layout_constraintTop_toBottomOf = "@+id/description_edittext_create" />
+
 		</androidx.constraintlayout.widget.ConstraintLayout>
 
 	</ScrollView>

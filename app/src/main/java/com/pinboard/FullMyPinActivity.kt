@@ -40,8 +40,10 @@ class FullMyPinActivity() : AppCompatActivity() {
 		pin = intent.getSerializableExtra(stringPIN) as Pin
 
 		mDatabase = FirebaseDatabase.getInstance().reference
-		mMessageReference = FirebaseDatabase.getInstance().getReference("PINS")
-		currentPinRef = FirebaseDatabase.getInstance().getReference("PINS/${pin?.pinID}")
+		mMessageReference =
+			FirebaseDatabase.getInstance().getReference(R.string.pin_folder_name.toString())
+		currentPinRef = FirebaseDatabase.getInstance()
+			.getReference(R.string.pin_folder_name.toString().plus(pin?.pinID))
 		user = FirebaseAuth.getInstance().currentUser
 
 		Glide.with(this)
@@ -56,7 +58,7 @@ class FullMyPinActivity() : AppCompatActivity() {
 		price_fullpin_textview.text = pin?.price
 
 		messages_pin_button.setOnClickListener {
-			if (user?.uid.equals(pin?.authorID)) {
+			if (user?.uid.equals(pin?.userData?.userID)) {
 				//if (currentPinRef?.equals("ChatMessages")!!) {
 				val intent = Intent(this, PickChatActivity::class.java)
 				startActivity(intent.putExtra(stringPIN, pin))
@@ -87,7 +89,7 @@ class FullMyPinActivity() : AppCompatActivity() {
 	}
 
 	private fun deletePin() {
-		if (user?.uid.equals(pin?.authorID)) {
+		if (user?.uid.equals(pin?.userData?.userID)) {
 			mMessageReference!!.child(pin?.pinID.toString()).removeValue()
 			FirebaseStorage.getInstance().getReference("/images/${pin?.pinID}").delete()
 			Toast.makeText(
@@ -107,7 +109,7 @@ class FullMyPinActivity() : AppCompatActivity() {
 	}
 
 	override fun onCreateOptionsMenu(menu: Menu): Boolean {
-		if (user?.uid.equals(pin?.authorID)) {
+		if (user?.uid.equals(pin?.userData?.userID)) {
 			menuInflater.inflate(R.menu.menu_full_my_pin_bottom, menu)
 		}
 		return true

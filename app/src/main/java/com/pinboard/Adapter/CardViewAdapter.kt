@@ -19,7 +19,7 @@ class CardViewAdapter(val pin: Pin) : Item<ViewHolder>() {
 		viewHolder.itemView.pin_card_price_textview.text = pin.price
 
 
-		Glide.with(viewHolder.itemView.imageView_pincard).load(pin.imageURL)
+		Glide.with(viewHolder.itemView.imageView_pincard).load(pin.imageURL?.get(0))
 			//.crossFade()
 			.thumbnail(0.5f)
 			.placeholder(R.drawable.cloud_download_outline)

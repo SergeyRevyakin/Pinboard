@@ -1,6 +1,7 @@
 package com.pinboard
 
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -18,6 +19,7 @@ import com.google.firebase.database.*
 import com.pinboard.Adapter.CardViewAdapter
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
+import kotlinx.android.synthetic.main.activity_pin_browsing.*
 
 
 class PinBrowsingActivity : AppCompatActivity() {
@@ -44,7 +46,8 @@ class PinBrowsingActivity : AppCompatActivity() {
 		setSupportActionBar(findViewById(R.id.toolbar))
 
 		mDatabase = FirebaseDatabase.getInstance().reference
-		mMessageReference = FirebaseDatabase.getInstance().getReference("PINS")
+		mMessageReference =
+			FirebaseDatabase.getInstance().getReference(getString(R.string.pin_folder_name))
 		user = FirebaseAuth.getInstance().currentUser
 
 		firebaseListenerInit()
@@ -52,26 +55,27 @@ class PinBrowsingActivity : AppCompatActivity() {
 		recyclerView = findViewById(R.id.pin_browsing_recycleviewer)
 
 		recyclerView?.layoutManager = LinearLayoutManager(this)
+		pin_browsing_recycleviewer.layoutManager = LinearLayoutManager(this)
 
 		recyclerView?.adapter = sortingAdapter
 
 		sortingAdapter.setOnItemClickListener { item, view ->
 			val clickedPin = item as CardViewAdapter
-			if (clickedPin.pin.authorID.equals(FirebaseAuth.getInstance().uid)) {
-				Toast.makeText(
-					this,
-					"THATS MY PIN",
-					Toast.LENGTH_SHORT
-				).show()
+			if (clickedPin.pin.userData?.userID.equals(FirebaseAuth.getInstance().uid)) {
+//				Toast.makeText(
+//					this,
+//					"THATS MY PIN",
+//					Toast.LENGTH_SHORT
+//				).show()
 				val intent = Intent(view.context, FullMyPinActivity::class.java)
 
 				startActivity(intent.putExtra("pin", clickedPin.pin))
 			} else {
-				Toast.makeText(
-					this@PinBrowsingActivity,
-					"WRONG",
-					Toast.LENGTH_SHORT
-				).show()
+//				Toast.makeText(
+//					this@PinBrowsingActivity,
+//					"WRONG",
+//					Toast.LENGTH_SHORT
+//				).show()
 
 				val intent = Intent(view.context, FullMyPinActivity::class.java)
 				startActivity(intent.putExtra("pin", clickedPin.pin))
@@ -98,6 +102,15 @@ class PinBrowsingActivity : AppCompatActivity() {
 //			recyclerView?.adapter = sortingAdapter
 //			true
 //		}
+		R.id.sort_by_author_menuItem -> {
+//			recyclerView?.scrollToPosition(5)
+//			Toast.makeText(
+//					this@PinBrowsingActivity,
+//					"WRONG",
+//					Toast.LENGTH_SHORT
+//				).show()
+			true
+		}
 
 		R.id.sort_by_price_menuItem -> {
 			sortingAdapter.clear()
@@ -116,7 +129,7 @@ class PinBrowsingActivity : AppCompatActivity() {
 			if (item.title.equals("Show only my PINs")) {
 				item.title = "Show ALL PINs"
 				for (i in 0 until pinList!!.size) {
-					if (pinList!!.elementAt(i).authorID.equals(user?.uid)) {
+					if (pinList!!.elementAt(i).userData?.userID.equals(user?.uid)) {
 						sortingAdapter.add(CardViewAdapter(pinList!!.elementAt(i)))
 					}
 				}
@@ -172,6 +185,13 @@ class PinBrowsingActivity : AppCompatActivity() {
 		return true
 	}
 
+	override fun onNavigateUpFromChild(child: Activity?): Boolean {
+		sortingAdapter.clear()
+		pinList?.forEach { pin -> sortingAdapter.add(CardViewAdapter(pin)) }
+		recyclerView?.smoothScrollToPosition(sortingAdapter.itemCount)
+		return super.onNavigateUpFromChild(child)
+	}
+
 	private fun firebaseListenerInit() {
 
 		//val childEventListener = object : ChildEventListener {
@@ -180,6 +200,9 @@ class PinBrowsingActivity : AppCompatActivity() {
 				val message = dataSnapshot.getValue(Pin::class.java)
 				pinList?.add(message!!)
 				sortingAdapter.add(CardViewAdapter(message!!))
+//				recyclerView?.layoutManager = LinearLayoutManager(this@PinBrowsingActivity)
+//				recyclerView?.smoothScrollToPosition(sortingAdapter.itemCount)
+
 			}
 
 			override fun onChildChanged(dataSnapshot: DataSnapshot, previousChildName: String?) {
@@ -189,8 +212,10 @@ class PinBrowsingActivity : AppCompatActivity() {
 
 			override fun onChildRemoved(dataSnapshot: DataSnapshot) {
 				val message = dataSnapshot.getValue(Pin::class.java)
-				sortingAdapter.remove(CardViewAdapter(message ?: return))
+				//sortingAdapter.add(CardViewAdapter(message!!))
 				pinList?.remove(message)
+				sortingAdapter.clear()
+				pinList?.forEach { pin -> sortingAdapter.add(CardViewAdapter(pin)) }
 			}
 
 			override fun onChildMoved(dataSnapshot: DataSnapshot, previousChildName: String?) {
@@ -201,10 +226,10 @@ class PinBrowsingActivity : AppCompatActivity() {
 			override fun onCancelled(databaseError: DatabaseError) {
 				Log.e(TAG, "postMessages:onCancelled", databaseError.toException())
 				Toast.makeText(
-					this@PinBrowsingActivity,
-					"Failed to load your Account. \n Please log in or register",
-					Toast.LENGTH_SHORT
-				)
+						this@PinBrowsingActivity,
+						"Failed to load your Account. \n Please log in or register",
+						Toast.LENGTH_SHORT
+					)
 					.show()
 				finish()
 				loginScreen()

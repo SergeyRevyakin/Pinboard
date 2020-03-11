@@ -48,7 +48,7 @@ class ChatActivity : AppCompatActivity() {
 		user = FirebaseAuth.getInstance().currentUser
 
 		val tb: Toolbar = findViewById(R.id.toolbar)
-		if (pin?.authorID != user?.uid) {
+		if (pin?.userData?.userID != user?.uid) {
 			tb.title = pin!!.author + " with pin " + pin!!.header
 		}
 		setSupportActionBar(tb)
@@ -82,18 +82,18 @@ class ChatActivity : AppCompatActivity() {
 
 			override fun onChildAdded(p0: DataSnapshot, p1: String?) {
 				val chatMessage = p0.getValue(ChatMessage::class.java)
-				if (!pin?.authorID.equals(user?.uid)) {
+				if (!pin?.userData?.userID.equals(user?.uid)) {
 					if (chatMessage!!.fromID.equals(userID)) {
 						chatAdapter.add(ChatToItem(chatMessage?.text.toString()))
 					}
-					if (chatMessage!!.fromID.equals(pin?.authorID)) {
+					if (chatMessage.fromID.equals(pin?.userData?.userID)) {
 						chatAdapter.add(ChatFromItem(chatMessage?.text.toString()))
 					}
 				} else {
-					if (chatMessage!!.fromID.equals(userID)) {
+					if (chatMessage?.fromID.equals(userID)) {
 						chatAdapter.add(ChatFromItem(chatMessage?.text.toString()))
 					}
-					if (chatMessage!!.fromID.equals(pin?.authorID)) {
+					if (chatMessage?.fromID.equals(pin?.userData?.userID)) {
 						chatAdapter.add(ChatToItem(chatMessage?.text.toString()))
 					}
 				}
@@ -111,15 +111,21 @@ class ChatActivity : AppCompatActivity() {
 		val ref = mPinReference?.push()
 		val text = chat_edittext.text.toString()
 		val chatMessage =
-			ChatMessage(ref?.key, user?.uid, pin?.authorID, text, System.currentTimeMillis())
-		ref?.setValue(chatMessage)?.addOnFailureListener {
-			Snackbar.make(
-				chat_recyclerview,
-				"Cant send chat message because $it",
-				Snackbar.LENGTH_LONG
+			ChatMessage(
+				ref?.key,
+				user?.uid,
+				pin?.userData?.userID,
+				text,
+				System.currentTimeMillis()
 			)
-				.show()
-		}
+		ref?.setValue(chatMessage)?.addOnFailureListener {
+				Snackbar.make(
+						chat_recyclerview,
+						"Cant send chat message because $it",
+						Snackbar.LENGTH_LONG
+					)
+					.show()
+			}
 			?.addOnSuccessListener {
 				chat_edittext.text = null
 			}
