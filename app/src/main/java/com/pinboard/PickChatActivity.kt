@@ -54,7 +54,8 @@ class PickChatActivity : AppCompatActivity() {
 
 		mUserReference = FirebaseDatabase.getInstance().getReference("users")
 		currentPinRef =
-			FirebaseDatabase.getInstance().getReference("PINS/${pin?.pinID}/ChatMessages")
+			FirebaseDatabase.getInstance()
+				.getReference(getString(R.string.pin_folder_name).plus("${pin?.pinID}/ChatMessages"))
 		user = FirebaseAuth.getInstance().currentUser
 
 		userMessages()
@@ -88,8 +89,8 @@ class PickChatActivity : AppCompatActivity() {
 				var userID: String? = null
 				p0.children.forEach {
 					userID = it.getValue(ChatMessage::class.java)?.fromID
-					if (!(addedUsersIDs!!.contains(userID))) {
-						addedUsersIDs!!.add(userID)
+					if (!(addedUsersIDs.contains(userID))) {
+						addedUsersIDs.add(userID)
 					}
 
 					//val userID = p1//chatMessage?.fromID

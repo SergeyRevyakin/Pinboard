@@ -12,6 +12,7 @@
 		android:background = "@drawable/rounded_edittext_5"
 		android:maxWidth = "320dp"
 		android:padding = "6dp"
+		android:paddingStart = "8dp"
 		android:text = "TextView fsfsdgsfg sfgs s \n fsfsgdsfg sfd j  IB IADNFO S OAIUNDS N A"
 		android:textSize = "20sp"
 		app:layout_constraintStart_toStartOf = "parent"

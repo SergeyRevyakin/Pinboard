@@ -44,7 +44,7 @@ class ChatActivity : AppCompatActivity() {
 		mDatabase = FirebaseDatabase.getInstance().reference
 		mPinReference =
 			FirebaseDatabase.getInstance()
-				.getReference("PINS/${pin!!.pinID}/ChatMessages/$userID")
+				.getReference(getString(R.string.pin_folder_name).plus("${pin!!.pinID}/ChatMessages/$userID"))
 		user = FirebaseAuth.getInstance().currentUser
 
 		val tb: Toolbar = findViewById(R.id.toolbar)
@@ -84,10 +84,10 @@ class ChatActivity : AppCompatActivity() {
 				val chatMessage = p0.getValue(ChatMessage::class.java)
 				if (!pin?.userData?.userID.equals(user?.uid)) {
 					if (chatMessage!!.fromID.equals(userID)) {
-						chatAdapter.add(ChatToItem(chatMessage?.text.toString()))
+						chatAdapter.add(ChatToItem(chatMessage.text.toString()))
 					}
 					if (chatMessage.fromID.equals(pin?.userData?.userID)) {
-						chatAdapter.add(ChatFromItem(chatMessage?.text.toString()))
+						chatAdapter.add(ChatFromItem(chatMessage.text.toString()))
 					}
 				} else {
 					if (chatMessage?.fromID.equals(userID)) {

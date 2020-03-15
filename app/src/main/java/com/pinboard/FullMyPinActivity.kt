@@ -2,21 +2,25 @@ package com.pinboard
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import com.bumptech.glide.Glide
+import androidx.viewpager.widget.ViewPager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
+import com.pinboard.Adapter.ViewPagerAdapter
+import com.viewpagerindicator.CirclePageIndicator
 import kotlinx.android.synthetic.main.activity_full_my_pin.*
+import java.util.*
 
-class FullMyPinActivity() : AppCompatActivity() {
+class FullMyPinActivity : AppCompatActivity() {
 
 	private val stringPIN = "pin"
 
@@ -25,6 +29,7 @@ class FullMyPinActivity() : AppCompatActivity() {
 	private var mMessageReference: DatabaseReference? = null
 	private var currentPinRef: DatabaseReference? = null
 	private var pin: Pin? = null
+
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -39,20 +44,15 @@ class FullMyPinActivity() : AppCompatActivity() {
 
 		pin = intent.getSerializableExtra(stringPIN) as Pin
 
+		setUpAdapter(pin!!)
+
 		mDatabase = FirebaseDatabase.getInstance().reference
 		mMessageReference =
-			FirebaseDatabase.getInstance().getReference(R.string.pin_folder_name.toString())
+			FirebaseDatabase.getInstance().getReference(getString(R.string.pin_folder_name))
 		currentPinRef = FirebaseDatabase.getInstance()
-			.getReference(R.string.pin_folder_name.toString().plus(pin?.pinID))
+			.getReference(getString(R.string.pin_folder_name).plus(pin?.pinID))
 		user = FirebaseAuth.getInstance().currentUser
 
-		Glide.with(this)
-			.load(pin?.imageURL)
-			.placeholder(R.drawable.cloud_download_outline)
-			.fallback(R.drawable.alert_circle)
-			.error(R.drawable.alert_circle)
-			.centerCrop()
-			.into(findViewById(R.id.full_pin_imageview))
 		header_fullpin_textview.text = pin?.header
 		description_fullpin_textview.text = pin?.description
 		price_fullpin_textview.text = pin?.price
@@ -90,17 +90,17 @@ class FullMyPinActivity() : AppCompatActivity() {
 
 	private fun deletePin() {
 		if (user?.uid.equals(pin?.userData?.userID)) {
-			mMessageReference!!.child(pin?.pinID.toString()).removeValue()
+			currentPinRef?.removeValue()
 			FirebaseStorage.getInstance().getReference("/images/${pin?.pinID}").delete()
 			Toast.makeText(
-				this@FullMyPinActivity,
+				this,
 				"Your pin ${pin?.header} was deleted",
 				Toast.LENGTH_SHORT
 			).show()
 			finish()
 		} else {
 			Toast.makeText(
-				this@FullMyPinActivity,
+				this,
 				"You cant delete this stringPIN",
 				Toast.LENGTH_SHORT
 			).show()
@@ -124,5 +124,56 @@ class FullMyPinActivity() : AppCompatActivity() {
 		else -> {
 			super.onOptionsItemSelected(item)
 		}
+	}
+
+
+	private fun setUpAdapter(pin: Pin) {
+
+		mPager = findViewById(R.id.viewpager)
+		mPager!!.adapter = ViewPagerAdapter(this, pin)
+		NUM_PAGES = pin.imageURL!!.size
+
+		if (NUM_PAGES > 1) {
+
+			val indicator = findViewById<CirclePageIndicator>(R.id.indicator)
+
+			indicator.setViewPager(mPager)
+
+			val density = resources.displayMetrics.density
+
+			indicator.radius = 5 * density
+
+			val handler = Handler()
+			val Update = Runnable {
+				if (currentPage == NUM_PAGES) {
+					currentPage = 0
+				}
+				mPager!!.setCurrentItem(currentPage++, true)
+			}
+			val swipeTimer = Timer()
+			swipeTimer.schedule(object : TimerTask() {
+				override fun run() {
+					handler.post(Update)
+				}
+			}, 5000, 5000)
+
+			indicator.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+
+				override fun onPageSelected(position: Int) {
+					currentPage = position
+				}
+
+				override fun onPageScrolled(pos: Int, arg1: Float, arg2: Int) {}
+
+				override fun onPageScrollStateChanged(pos: Int) {}
+			})
+		}
+	}
+
+	companion object {
+
+		private var mPager: ViewPager? = null
+		private var currentPage = 0
+		private var NUM_PAGES = 0
 	}
 }

@@ -62,21 +62,9 @@ class PinBrowsingActivity : AppCompatActivity() {
 		sortingAdapter.setOnItemClickListener { item, view ->
 			val clickedPin = item as CardViewAdapter
 			if (clickedPin.pin.userData?.userID.equals(FirebaseAuth.getInstance().uid)) {
-//				Toast.makeText(
-//					this,
-//					"THATS MY PIN",
-//					Toast.LENGTH_SHORT
-//				).show()
 				val intent = Intent(view.context, FullMyPinActivity::class.java)
-
 				startActivity(intent.putExtra("pin", clickedPin.pin))
 			} else {
-//				Toast.makeText(
-//					this@PinBrowsingActivity,
-//					"WRONG",
-//					Toast.LENGTH_SHORT
-//				).show()
-
 				val intent = Intent(view.context, FullMyPinActivity::class.java)
 				startActivity(intent.putExtra("pin", clickedPin.pin))
 			}
@@ -85,7 +73,6 @@ class PinBrowsingActivity : AppCompatActivity() {
 	}
 
 	override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-
 
 		R.id.add_new_pin -> {
 			val intent = Intent(this, CreatePinActivity::class.java)
@@ -239,7 +226,7 @@ class PinBrowsingActivity : AppCompatActivity() {
 
 	}
 
-	private fun loginScreen() {
+	internal fun loginScreen() {
 		FirebaseAuth.getInstance().signOut()
 		val intent = Intent(this, LoginActivity::class.java)
 		intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -247,15 +234,10 @@ class PinBrowsingActivity : AppCompatActivity() {
 		startActivity(intent)
 	}
 
-	override fun onStop() {
-		super.onStop()
-
-	}
-
 	override fun onDestroy() {
 		super.onDestroy()
 
-		sortingAdapter!!.clear()
+		sortingAdapter.clear()
 	}
 
 }
